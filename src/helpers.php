@@ -7,6 +7,7 @@
  */
 
 use Carbon\Carbon;
+use Collective\Html\HtmlFacade as Html;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Artisan\Background;
