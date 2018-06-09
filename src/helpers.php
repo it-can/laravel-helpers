@@ -133,11 +133,12 @@ if ( ! function_exists('getUserId')) {
     /**
      * Return user id
      *
+     * @param  $guard
      * @return int|null
      */
-    function getUserId()
+    function getUserId($guard = null)
     {
-        return auth()->id();
+        return auth($guard)->id();
     }
 }
 
@@ -150,7 +151,7 @@ if ( ! function_exists('isLoggedIn')) {
      */
     function isLoggedIn($guard = null)
     {
-        return auth()->guard($guard)->check();
+        return auth($guard)->check();
     }
 }
 
