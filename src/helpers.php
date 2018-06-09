@@ -9,6 +9,7 @@
 use Carbon\Carbon;
 use Collective\Html\HtmlFacade as Html;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Artisan\Background;
 use Ramsey\Uuid\Uuid;
@@ -38,14 +39,8 @@ if ( ! function_exists('cdnUrl')) {
     function cdnUrl($path = '')
     {
         $cdn = (config('settings.cdn')) ?: url('/');
-        $cdn = rtrim($cdn, '/');
 
-        // Set path to cdn url
-        if ($path) {
-            $path = starts_with($path, '/') ? $path : '/' . $path;
-        }
-
-        return $cdn . $path;
+        return rtrim($cdn, '/') . '/' . ltrim($path, '/');
     }
 }
 
@@ -84,7 +79,7 @@ if ( ! function_exists('uploadUrl')) {
      */
     function uploadUrl($url)
     {
-        return cdnUrl('/uploads/' . $url);
+        return cdnUrl('uploads/' . ltrim($url, '/'));
     }
 }
 
@@ -97,7 +92,7 @@ if ( ! function_exists('imgUrl')) {
      */
     function imgUrl($url)
     {
-        return cdnUrl('/img/' . $url);
+        return cdnUrl('img/' . ltrim($url, '/'));
     }
 }
 
@@ -139,7 +134,7 @@ if ( ! function_exists('getUserId')) {
      */
     function getUserId($guard = null)
     {
-        return auth($guard)->id();
+        return Auth::guard($guard)->id();
     }
 }
 
@@ -152,7 +147,7 @@ if ( ! function_exists('isLoggedIn')) {
      */
     function isLoggedIn($guard = null)
     {
-        return auth($guard)->check();
+        return Auth::guard($guard)->check();
     }
 }
 
@@ -198,6 +193,7 @@ if ( ! function_exists('isEnv')) {
     /**
      * Is current environment given value?
      *
+     * @param string $env
      * @return bool
      */
     function isEnv($env)
