@@ -483,6 +483,10 @@ class HelperTest extends TestCase
         $xml = '<url><loc><![CDATA[ test]]></loc><lastmod>2018-06-06T10:45:45+00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>';
 
         $this->assertTrue(isValidXML($xml));
+
+        $xml = '<loc><![CDATA[ testï]]></loc>';
+
+        $this->assertTrue(isValidXML($xml));
     }
 
     /**
