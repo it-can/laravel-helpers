@@ -471,6 +471,18 @@ class HelperTest extends TestCase
         $this->assertFalse(isValidXML($this->getXmlFileContent('test.txt')));
 
         $this->assertFalse(isValidXML('<!DOCTYPE html><html><body></body></html>'));
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"><url><loc><![CDATA[ test]]></loc><image:image><image:loc><![CDATA[test]]></image:loc><image:title><![CDATA[test]]></image:title></image:image><lastmod>2018-06-06T10:45:45+00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url><loc><![CDATA[test2]]></loc><image:image><image:loc><![CDATA[test2]]></image:loc><image:title><![CDATA[test2]]></image:title></image:image><lastmod>2018-04-17T09:23:18+00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>';
+
+        $this->assertTrue(isValidXML($xml));
+
+        $xml = '<url><loc><![CDATA[ test]]></loc><image:image><image:loc><![CDATA[test]]></image:loc><image:title><![CDATA[test]]></image:title></image:image><lastmod>2018-06-06T10:45:45+00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>';
+
+        $this->assertFalse(isValidXML($xml));
+
+        $xml = '<url><loc><![CDATA[ test]]></loc><lastmod>2018-06-06T10:45:45+00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>';
+
+        $this->assertTrue(isValidXML($xml));
     }
 
     /**
@@ -485,9 +497,5 @@ class HelperTest extends TestCase
 
         $response = $this->parseXML($this->getXmlFileContent('test.txt'));
         $this->assertFalse($response);
-
-        $xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"><url><loc><![CDATA[ test]]></loc><image:image><image:loc><![CDATA[test]]></image:loc><image:title><![CDATA[test]]></image:title></image:image><lastmod>2018-06-06T10:45:45+00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url><loc><![CDATA[test2]]></loc><image:image><image:loc><![CDATA[test2]]></image:loc><image:title><![CDATA[test2]]></image:title></image:image><lastmod>2018-04-17T09:23:18+00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>';
-
-        $this->assertTrue(isValidXML($xml));
     }
 }
