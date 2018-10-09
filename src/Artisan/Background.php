@@ -14,6 +14,11 @@ class Background
     private $after;
     private $phpBinary;
 
+    /**
+     * @param      $command
+     * @param null $before
+     * @param null $after
+     */
     public function __construct($command, $before = null, $after = null)
     {
         $this->command = $command;
@@ -22,21 +27,40 @@ class Background
         $this->phpBinary = (new PhpExecutableFinder)->find();
     }
 
+    /**
+     * @param      $command
+     * @param null $before
+     * @param null $after
+     * @return Background
+     */
     public static function factory($command, $before = null, $after = null)
     {
         return new self($command, $before, $after);
     }
 
+    /**
+     * Execute command
+     */
     public function runInBackground()
     {
         exec($this->composeForRunInBackground());
     }
 
+    /**
+     * Composer background script
+     *
+     * @return string
+     */
     protected function composeForRunInBackground()
     {
         return "({$this->composeForRun()}) > /dev/null 2>&1 &";
     }
 
+    /**
+     * Compile command
+     *
+     * @return string
+     */
     protected function composeForRun()
     {
         $parts = [];
@@ -54,8 +78,15 @@ class Background
         return implode(' && ', $parts);
     }
 
+    /**
+     * Get artisan path
+     *
+     * @return string
+     */
     protected function getArtisan()
     {
-        return base_path(defined('ARTISAN_BINARY') ? ARTISAN_BINARY : 'artisan');
+        $artisan = defined('ARTISAN_BINARY') ? ARTISAN_BINARY : 'artisan';
+
+        return base_path($artisan);
     }
 }
