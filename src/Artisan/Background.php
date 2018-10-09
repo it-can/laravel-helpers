@@ -12,7 +12,6 @@ class Background
     private $command;
     private $before;
     private $after;
-    private $phpBinary;
 
     /**
      * @param      $command
@@ -24,7 +23,6 @@ class Background
         $this->command = $command;
         $this->before = $before;
         $this->after = $after;
-        $this->phpBinary = (new PhpExecutableFinder)->find();
     }
 
     /**
@@ -44,6 +42,14 @@ class Background
     public function runInBackground()
     {
         exec($this->composeForRunInBackground());
+    }
+
+    /**
+     * @return false|string
+     */
+    protected function phpBinary()
+    {
+        return (new PhpExecutableFinder)->find(false);
     }
 
     /**
@@ -69,7 +75,7 @@ class Background
             $parts[] = (string) $this->before;
         }
 
-        $parts[] = "{$this->phpBinary} {$this->getArtisan()} {$this->command}";
+        $parts[] = "{$this->phpBinary()} {$this->getArtisan()} {$this->command}";
 
         if ( ! empty($this->after)) {
             $parts[] = (string) $this->after;
