@@ -1,5 +1,7 @@
 <?php
 
+namespace ITCAN\LaravelHelpers\Tests;
+
 use PHPUnit\Framework\TestCase;
 
 class HelperTest extends TestCase
@@ -353,7 +355,7 @@ class HelperTest extends TestCase
 
     public function testMarkdown()
     {
-        $markdown = new Parsedown;
+        $markdown = new \Parsedown;
         $result = $markdown->parse('# Something');
         $this->assertEquals('<h1>Something</h1>', $result);
     }
@@ -403,7 +405,7 @@ class HelperTest extends TestCase
     /** @test */
     public function email_it_returns_false_for_an_object()
     {
-        $this->assertFalse(validEmail(new StdClass()));
+        $this->assertFalse(validEmail(new \stdClass));
     }
 
     /** @test */

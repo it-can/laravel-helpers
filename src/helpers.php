@@ -546,3 +546,16 @@ if ( ! function_exists('isValidXML')) {
         return empty($errors);
     }
 }
+
+if ( ! function_exists('callBackground')) {
+    /**
+     * @param      $command
+     * @param null $before
+     * @param null $after
+     * @return mixed
+     */
+    function callBackground($command, $before = null, $after = null)
+    {
+        return Background::factory($command, $before, $after)->runInBackground();
+    }
+}
