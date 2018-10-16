@@ -395,21 +395,6 @@ if ( ! function_exists('selectArray')) {
     }
 }
 
-if ( ! function_exists('artisanBackground')) {
-    /**
-     * Call an Artisan command in background
-     *
-     * @param string $command
-     * @param null   $before
-     * @param null   $after
-     */
-    function artisanBackground($command, $before = null, $after = null)
-    {
-        return Background::factory($command, $before, $after)
-            ->runInBackground();
-    }
-}
-
 if ( ! function_exists('nullOrValue')) {
     /**
      * Return null when string value when is empty
@@ -556,6 +541,7 @@ if ( ! function_exists('callBackground')) {
      */
     function callBackground($command, $before = null, $after = null)
     {
-        return Background::factory($command, $before, $after)->runInBackground();
+        return Background::factory($command, $before, $after)
+            ->runInBackground();
     }
 }
