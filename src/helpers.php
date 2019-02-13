@@ -320,7 +320,7 @@ if ( ! function_exists('randomFilename')) {
     function randomFilename($path, $ext, $name = null)
     {
         $ext = Str::lower(str_replace('.', '', $ext));
-        $filename = ($name) ? Str::slug(Str::limit($name, 50), '_') : str_random(30);
+        $filename = ($name) ? Str::slug(Str::limit($name, 50), '_') : Str::random(30);
         $filename = Str::lower($filename) . '_' . time();
 
         // Loop until file does not exists
@@ -392,21 +392,6 @@ if ( ! function_exists('selectArray')) {
         }
 
         return $array;
-    }
-}
-
-if ( ! function_exists('artisanBackground')) {
-    /**
-     * Call an Artisan command in background
-     *
-     * @param string $command
-     * @param null   $before
-     * @param null   $after
-     */
-    function artisanBackground($command, $before = null, $after = null)
-    {
-        return Background::factory($command, $before, $after)
-            ->runInBackground();
     }
 }
 
@@ -544,5 +529,19 @@ if ( ! function_exists('isValidXML')) {
         libxml_clear_errors();
 
         return empty($errors);
+    }
+}
+
+if ( ! function_exists('callBackground')) {
+    /**
+     * @param      $command
+     * @param null $before
+     * @param null $after
+     * @return mixed
+     */
+    function callBackground($command, $before = null, $after = null)
+    {
+        return Background::factory($command, $before, $after)
+            ->runInBackground();
     }
 }
