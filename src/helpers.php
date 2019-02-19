@@ -259,6 +259,7 @@ if ( ! function_exists('getHost')) {
     /**
      * Get hostname from url
      *
+     * @deprecated
      * @param string $url
      * @param bool   $subdomain (include subdomain or not)
      * @return string
@@ -543,5 +544,22 @@ if ( ! function_exists('callBackground')) {
     {
         return Background::factory($command, $before, $after)
             ->runInBackground();
+    }
+}
+
+if ( ! function_exists('domainName')) {
+    /**
+     * Parse url and return domainname
+     *
+     * @param string $url
+     * @param bool   $fullHost
+     * @return string|null
+     */
+    function domainName($url = '', $fullHost = false)
+    {
+        $extract = new \LayerShifter\TLDExtract\Extract;
+        $result = $extract->parse($url);
+
+        return ($fullHost) ? $result->getFullHost() : $result->getRegistrableDomain();
     }
 }
