@@ -1,6 +1,6 @@
 <?php
 /**
- * https://github.com/dmitry-ivanov/laravel-helper-functions
+ * https://github.com/dmitry-ivanov/laravel-helper-functions.
  */
 
 namespace ITCAN\LaravelHelpers\Artisan;
@@ -37,7 +37,7 @@ class Background
     }
 
     /**
-     * Execute command
+     * Execute command.
      */
     public function runInBackground()
     {
@@ -53,7 +53,7 @@ class Background
     }
 
     /**
-     * Composer background script
+     * Composer background script.
      *
      * @return string
      */
@@ -63,7 +63,7 @@ class Background
     }
 
     /**
-     * Compile command
+     * Compile command.
      *
      * @return string
      */
@@ -71,13 +71,13 @@ class Background
     {
         $parts = [];
 
-        if ( ! empty($this->before)) {
+        if (! empty($this->before)) {
             $parts[] = (string) $this->before;
         }
 
         $parts[] = "{$this->phpBinary()} {$this->getArtisan()} {$this->command}";
 
-        if ( ! empty($this->after)) {
+        if (! empty($this->after)) {
             $parts[] = (string) $this->after;
         }
 
@@ -85,7 +85,7 @@ class Background
     }
 
     /**
-     * Get artisan path
+     * Get artisan path.
      *
      * @return string
      */
