@@ -263,19 +263,19 @@ class HelperTest extends TestCase
         $this->assertEquals(45, strlen($response));
 
         $response = randomFilename('.', 'jpg', 'test');
-        $this->assertContains('test_', $response);
+        $this->assertStringContainsString('test_', $response);
 
         $response = randomFilename('.', 'jpg', 'TEST');
-        $this->assertContains('test_', $response);
+        $this->assertStringContainsString('test_', $response);
 
         $response = randomFilename('.', 'jpg', 'test test');
-        $this->assertContains('test_test_', $response);
+        $this->assertStringContainsString('test_test_', $response);
 
         $response = randomFilename('.', 'xml', 'phpunit');
-        $this->assertContains('phpunit_', $response);
+        $this->assertStringContainsString('phpunit_', $response);
 
         $response = randomFilename('.', 'xml', 'PHPUNIT');
-        $this->assertContains('phpunit_', $response);
+        $this->assertStringContainsString('phpunit_', $response);
     }
 
     /**
