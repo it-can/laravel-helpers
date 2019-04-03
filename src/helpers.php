@@ -1,23 +1,22 @@
 <?php
 /**
- * My custom Laravel helpers
+ * My custom Laravel helpers.
  *
  * @copyright Copyright (c) 2017
  * @author    IT Can (M. Vugteveen) <info@it-can.nl>
  */
-
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Collective\Html\HtmlFacade as Html;
 use ITCAN\LaravelHelpers\Artisan\Background;
-use Ramsey\Uuid\Uuid;
 
 if ( ! function_exists('fatal')) {
     /**
      * Dump the passed variables and end the script.
-     * This will pass it through to dd() function of Laravel
+     * This will pass it through to dd() function of Laravel.
      *
      * @deprecated
      * @param  mixed
@@ -31,7 +30,7 @@ if ( ! function_exists('fatal')) {
 
 if ( ! function_exists('cdnUrl')) {
     /**
-     * Get cdn baseurl or normal baseurl
+     * Get cdn baseurl or normal baseurl.
      *
      * @param  string $path Path to file
      * @return string
@@ -40,7 +39,7 @@ if ( ! function_exists('cdnUrl')) {
     {
         $cdn = (config('settings.cdn')) ?: url('/');
 
-        return rtrim($cdn, '/') . '/' . ltrim($path, '/');
+        return rtrim($cdn, '/').'/'.ltrim($path, '/');
     }
 }
 
@@ -72,33 +71,33 @@ if ( ! function_exists('mixCDN')) {
 
 if ( ! function_exists('uploadUrl')) {
     /**
-     * Get upload url
+     * Get upload url.
      *
      * @param string $url
      * @return string
      */
     function uploadUrl($url)
     {
-        return cdnUrl('uploads/' . ltrim($url, '/'));
+        return cdnUrl('uploads/'.ltrim($url, '/'));
     }
 }
 
 if ( ! function_exists('imgUrl')) {
     /**
-     * Get image url
+     * Get image url.
      *
      * @param string $url
      * @return string
      */
     function imgUrl($url)
     {
-        return cdnUrl('img/' . ltrim($url, '/'));
+        return cdnUrl('img/'.ltrim($url, '/'));
     }
 }
 
 if ( ! function_exists('img')) {
     /**
-     * Simple image helper wrapper for Html::image
+     * Simple image helper wrapper for Html::image.
      *
      * @param string $url
      * @param string $alt
@@ -114,7 +113,7 @@ if ( ! function_exists('img')) {
 
 if ( ! function_exists('convertFloat')) {
     /**
-     * Convert to float
+     * Convert to float.
      *
      * @param mixed $value
      * @return float
@@ -127,7 +126,7 @@ if ( ! function_exists('convertFloat')) {
 
 if ( ! function_exists('getUserId')) {
     /**
-     * Return user id
+     * Return user id.
      *
      * @param  $guard
      * @return int|null
@@ -140,7 +139,7 @@ if ( ! function_exists('getUserId')) {
 
 if ( ! function_exists('isLoggedIn')) {
     /**
-     * Return if user is loggedin
+     * Return if user is loggedin.
      *
      * @param  $guard
      * @return bool
@@ -153,7 +152,7 @@ if ( ! function_exists('isLoggedIn')) {
 
 if ( ! function_exists('convertPercent')) {
     /**
-     * Convert percentage to calculateble float
+     * Convert percentage to calculateble float.
      *
      * @param $percent
      * @return float
@@ -166,7 +165,7 @@ if ( ! function_exists('convertPercent')) {
 
 if ( ! function_exists('calculateTax')) {
     /**
-     * Get amount of tax in amount
+     * Get amount of tax in amount.
      *
      * @param mixed $amount
      * @param mixed $tax
@@ -228,7 +227,7 @@ if ( ! function_exists('isDevelopment')) {
 
 if ( ! function_exists('getPHPUser')) {
     /**
-     * Return user that is running the script
+     * Return user that is running the script.
      *
      * @param bool $lowercase
      * @return string
@@ -257,7 +256,7 @@ if ( ! function_exists('carbon')) {
 
 if ( ! function_exists('getHost')) {
     /**
-     * Get hostname from url
+     * Get hostname from url.
      *
      * @deprecated
      * @param string $url
@@ -270,7 +269,7 @@ if ( ! function_exists('getHost')) {
         $url = trim($url);
 
         if (stripos($url, '://') === false and substr($url, 0, 1) != '/') {
-            $url = 'http://' . $url;
+            $url = 'http://'.$url;
         }
 
         $parsedUrl = parse_url($url);
@@ -279,27 +278,27 @@ if ( ! function_exists('getHost')) {
         $host = array_pop($parts);
 
         if (strlen($tld) === 2 && strlen($host) <= 3) {
-            $tld = $host . '.' . $tld;
+            $tld = $host.'.'.$tld;
             $host = array_pop($parts);
         }
 
         $info = [
             'protocol'  => $parsedUrl['scheme'],
             'subdomain' => implode('.', $parts),
-            'domain'    => $host . '.' . $tld,
+            'domain'    => $host.'.'.$tld,
             'host'      => $host,
             'tld'       => $tld,
         ];
 
         return ($subdomain and ! empty($info['subdomain']))
-            ? $info['subdomain'] . '.' . $info['domain']
+            ? $info['subdomain'].'.'.$info['domain']
             : $info['domain'];
     }
 }
 
 if ( ! function_exists('randomCode')) {
     /**
-     * Generate random code
+     * Generate random code.
      *
      * @return string
      */
@@ -311,7 +310,7 @@ if ( ! function_exists('randomCode')) {
 
 if ( ! function_exists('randomFilename')) {
     /**
-     * Generate random filename, regenerate if already exists
+     * Generate random filename, regenerate if already exists.
      *
      * @param string      $path Path to check
      * @param string      $ext  Extension without dot
@@ -322,14 +321,14 @@ if ( ! function_exists('randomFilename')) {
     {
         $ext = Str::lower(str_replace('.', '', $ext));
         $filename = ($name) ? Str::slug(Str::limit($name, 50), '_') : Str::random(30);
-        $filename = Str::lower($filename) . '_' . time();
+        $filename = Str::lower($filename).'_'.time();
 
         // Loop until file does not exists
-        while (file_exists($path . '/' . $filename . '.' . $ext)) {
+        while (file_exists($path.'/'.$filename.'.'.$ext)) {
             $filename .= rand(0, 99999);
         }
 
-        return $filename . '.' . $ext;
+        return $filename.'.'.$ext;
     }
 }
 
@@ -357,7 +356,7 @@ if ( ! function_exists('ibanMachine')) {
 
 if ( ! function_exists('ibanHuman')) {
     /**
-     * Convert an IBAN to human format
+     * Convert an IBAN to human format.
      *
      * @param string $iban
      * @return string
@@ -371,7 +370,7 @@ if ( ! function_exists('ibanHuman')) {
 
 if ( ! function_exists('selectArray')) {
     /**
-     * Create select dropdown with optional first element
+     * Create select dropdown with optional first element.
      *
      * @param                   $array
      * @param bool|string|array $withNull
@@ -399,7 +398,7 @@ if ( ! function_exists('selectArray')) {
 if ( ! function_exists('nullOrValue')) {
     /**
      * Return null when string value when is empty
-     * Optional, also return null when string value is 0
+     * Optional, also return null when string value is 0.
      *
      * @param $value
      * @param $skipZero
@@ -419,7 +418,7 @@ if ( ! function_exists('nullOrValue')) {
 
 if ( ! function_exists('markdown')) {
     /**
-     * Convert markdown to html
+     * Convert markdown to html.
      *
      * @param string $text
      * @param bool   $lineBreak
@@ -436,7 +435,7 @@ if ( ! function_exists('markdown')) {
 
 if ( ! function_exists('validEmail')) {
     /**
-     * Check if email is valid
+     * Check if email is valid.
      *
      * @param string $email
      * @return bool
@@ -449,7 +448,7 @@ if ( ! function_exists('validEmail')) {
 
 if ( ! function_exists('sanitizeFilename')) {
     /**
-     * Sanitize filename (ripped from CodeIgniter)
+     * Sanitize filename (ripped from CodeIgniter).
      *
      * @param string $filename
      * @param string $replace
@@ -511,7 +510,7 @@ if ( ! function_exists('sanitizeFilename')) {
 
 if ( ! function_exists('isValidXML')) {
     /**
-     * Validate XML
+     * Validate XML.
      *
      * @param string $xml
      * @return bool
@@ -549,7 +548,7 @@ if ( ! function_exists('callBackground')) {
 
 if ( ! function_exists('domainName')) {
     /**
-     * Parse url and return domainname
+     * Parse url and return domainname.
      *
      * @param string $url
      * @param bool   $fullHost

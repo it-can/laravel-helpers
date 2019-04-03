@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class NoCacheHeadersMiddleware
 {
     /**
-     * Headers for disabling cache
+     * Headers for disabling cache.
      *
      * @var array
      */
@@ -27,7 +27,7 @@ class NoCacheHeadersMiddleware
     protected $except = [];
 
     /**
-     * Return all headers
+     * Return all headers.
      *
      * @return array
      */
@@ -37,7 +37,7 @@ class NoCacheHeadersMiddleware
     }
 
     /**
-     * Determine if the request has a URI that should pass through
+     * Determine if the request has a URI that should pass through.
      *
      * @param  \Illuminate\Http\Request $request
      * @return bool

@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
     /**
-     * Register Blade directives
+     * Register Blade directives.
      *
      * @return void
      */
@@ -19,19 +19,19 @@ class GlobalHelpersServiceProvider extends ServiceProvider
         });
 
         Blade::directive('production', function () {
-            return "<?php if (isProduction()): ?>";
+            return '<?php if (isProduction()): ?>';
         });
 
         Blade::directive('endproduction', function () {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
 
         Blade::directive('notproduction', function () {
-            return "<?php if ( ! isProduction()): ?>";
+            return '<?php if ( ! isProduction()): ?>';
         });
 
         Blade::directive('endnotproduction', function () {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
 
         Blade::directive('lower', function ($string) {
