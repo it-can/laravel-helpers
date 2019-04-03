@@ -2,8 +2,8 @@
 
 namespace ITCAN\LaravelHelpers\Tests;
 
-use Illuminated\Testing\TestingTools;
 use Mockery;
+use Illuminated\Testing\TestingTools;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 Mockery::globalHelpers();
