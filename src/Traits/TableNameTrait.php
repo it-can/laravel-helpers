@@ -5,7 +5,7 @@ namespace ITCAN\LaravelHelpers\Traits;
 trait TableNameTrait
 {
     /**
-     * Return table name of model
+     * Return table name of model.
      *
      * @return string
      */

@@ -1,21 +1,36 @@
+dist: xenial
 language: php
 
-php:
-  - 7.1
-  - 7.2
+env:
+  global:
+    - SETUP=stable
 
-before_script:
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.1
+    - php: 7.1
+      env: SETUP=stable
+    - php: 7.2
+    - php: 7.2
+      env: SETUP=stable
+    - php: 7.3
+    - php: 7.3
+      env: SETUP=stable
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
   - phpenv config-rm xdebug.ini || true
   - travis_retry composer self-update
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
-env:
-  matrix:
-    - COMPOSER_FLAGS="--prefer-lowest"
-    - COMPOSER_FLAGS=""
+install:
+  - if [[ $SETUP = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $SETUP = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
 
-script:
-  - phpunit
+script: vendor/bin/phpunit
 
 notifications:
   email: false

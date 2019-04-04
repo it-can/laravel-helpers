@@ -7,10 +7,10 @@ use PHPUnit\Framework\TestCase;
 class HelperTest extends TestCase
 {
     /**
-     * Check if a given string is a valid UUID
+     * Check if a given string is a valid UUID.
      *
      * @param   string $uuid The string to check
-     * @return  boolean
+     * @return  bool
      */
     protected function isValidUuid($uuid = '')
     {
@@ -23,7 +23,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test convertFloat() helper
+     * Test convertFloat() helper.
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test calculateTax helper inc tax
+     * Test calculateTax helper inc tax.
      *
      * @return void
      */
@@ -88,7 +88,6 @@ class HelperTest extends TestCase
         $response = calculateTax(100, '0', $ex);
         $this->assertEquals(0, $response);
 
-
         $ex = true;
 
         $response = calculateTax(100, 21, $ex);
@@ -114,7 +113,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test convertPercent helper
+     * Test convertPercent helper.
      *
      * @return void
      */
@@ -242,7 +241,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test randomCode() helper
+     * Test randomCode() helper.
      *
      * @return void
      */
@@ -256,7 +255,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test randomFilename()
+     * Test randomFilename().
      */
     public function testRandomFilename()
     {
@@ -264,23 +263,23 @@ class HelperTest extends TestCase
         $this->assertEquals(45, strlen($response));
 
         $response = randomFilename('.', 'jpg', 'test');
-        $this->assertContains('test_', $response);
+        $this->assertStringContainsString('test_', $response);
 
         $response = randomFilename('.', 'jpg', 'TEST');
-        $this->assertContains('test_', $response);
+        $this->assertStringContainsString('test_', $response);
 
         $response = randomFilename('.', 'jpg', 'test test');
-        $this->assertContains('test_test_', $response);
+        $this->assertStringContainsString('test_test_', $response);
 
         $response = randomFilename('.', 'xml', 'phpunit');
-        $this->assertContains('phpunit_', $response);
+        $this->assertStringContainsString('phpunit_', $response);
 
         $response = randomFilename('.', 'xml', 'PHPUNIT');
-        $this->assertContains('phpunit_', $response);
+        $this->assertStringContainsString('phpunit_', $response);
     }
 
     /**
-     * Test ibanMachine()
+     * Test ibanMachine().
      */
     public function testIbanMachine()
     {
@@ -295,7 +294,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test ibanMachine()
+     * Test ibanMachine().
      */
     public function testIbanHuman()
     {
@@ -310,7 +309,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test now() and carbon()
+     * Test now() and carbon().
      */
     public function testNow()
     {
