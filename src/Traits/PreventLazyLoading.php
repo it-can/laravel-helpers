@@ -7,7 +7,8 @@ trait PreventLazyLoading
     /**
      * Get a relationship value from a method.
      *
-     * @param  string  $method
+     * @param string $method
+     *
      * @return mixed
      *
      * @throws \LogicException
@@ -16,8 +17,7 @@ trait PreventLazyLoading
     {
         $whitelist = $this->allowedLazyRelations ?? [];
 
-        if ($this->exists and ! in_array($method, $whitelist))
-        {
+        if ($this->exists and ! in_array($method, $whitelist)) {
             $model = get_class($this);
 
             throw new Exception("Tried to load {$method} in {$model}");

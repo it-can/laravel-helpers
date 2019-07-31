@@ -29,6 +29,7 @@ class Background
      * @param      $command
      * @param null $before
      * @param null $after
+     *
      * @return Background
      */
     public static function factory($command, $before = null, $after = null)
@@ -71,13 +72,13 @@ class Background
     {
         $parts = [];
 
-        if ( ! empty($this->before)) {
+        if (! empty($this->before)) {
             $parts[] = (string) $this->before;
         }
 
         $parts[] = "{$this->phpBinary()} {$this->getArtisan()} {$this->command}";
 
-        if ( ! empty($this->after)) {
+        if (! empty($this->after)) {
             $parts[] = (string) $this->after;
         }
 

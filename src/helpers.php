@@ -1,10 +1,5 @@
 <?php
-/**
- * My custom Laravel helpers.
- *
- * @copyright Copyright (c) 2017
- * @author    IT Can (M. Vugteveen) <info@it-can.nl>
- */
+
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
@@ -13,14 +8,15 @@ use Illuminate\Support\Facades\Auth;
 use Collective\Html\HtmlFacade as Html;
 use ITCAN\LaravelHelpers\Artisan\Background;
 
-if ( ! function_exists('fatal')) {
+if (! function_exists('fatal')) {
     /**
      * Dump the passed variables and end the script.
      * This will pass it through to dd() function of Laravel.
      *
-     * @deprecated
-     * @param  mixed
+     * @param mixed
+     *
      * @return void
+     * @deprecated
      */
     function fatal()
     {
@@ -28,11 +24,12 @@ if ( ! function_exists('fatal')) {
     }
 }
 
-if ( ! function_exists('cdnUrl')) {
+if (! function_exists('cdnUrl')) {
     /**
      * Get cdn baseurl or normal baseurl.
      *
-     * @param  string $path Path to file
+     * @param string $path Path to file
+     *
      * @return string
      */
     function cdnUrl($path = '')
@@ -43,11 +40,12 @@ if ( ! function_exists('cdnUrl')) {
     }
 }
 
-if ( ! function_exists('elixirCDN')) {
+if (! function_exists('elixirCDN')) {
     /**
      * Get the path to a versioned Elixir file.
      *
-     * @param  string $file
+     * @param string $file
+     *
      * @return string
      */
     function elixirCDN($file)
@@ -56,11 +54,12 @@ if ( ! function_exists('elixirCDN')) {
     }
 }
 
-if ( ! function_exists('mixCDN')) {
+if (! function_exists('mixCDN')) {
     /**
      * Get the path to a versioned Mix file.
      *
-     * @param  string $file
+     * @param string $file
+     *
      * @return string
      */
     function mixCDN($file)
@@ -69,11 +68,12 @@ if ( ! function_exists('mixCDN')) {
     }
 }
 
-if ( ! function_exists('uploadUrl')) {
+if (! function_exists('uploadUrl')) {
     /**
      * Get upload url.
      *
      * @param string $url
+     *
      * @return string
      */
     function uploadUrl($url)
@@ -82,11 +82,12 @@ if ( ! function_exists('uploadUrl')) {
     }
 }
 
-if ( ! function_exists('imgUrl')) {
+if (! function_exists('imgUrl')) {
     /**
      * Get image url.
      *
      * @param string $url
+     *
      * @return string
      */
     function imgUrl($url)
@@ -95,7 +96,7 @@ if ( ! function_exists('imgUrl')) {
     }
 }
 
-if ( ! function_exists('img')) {
+if (! function_exists('img')) {
     /**
      * Simple image helper wrapper for Html::image.
      *
@@ -103,6 +104,7 @@ if ( ! function_exists('img')) {
      * @param string $alt
      * @param array  $attributes
      * @param bool   $secure
+     *
      * @return string
      */
     function img($url, $alt = null, $attributes = [], $secure = null)
@@ -111,11 +113,12 @@ if ( ! function_exists('img')) {
     }
 }
 
-if ( ! function_exists('convertFloat')) {
+if (! function_exists('convertFloat')) {
     /**
      * Convert to float.
      *
      * @param mixed $value
+     *
      * @return float
      */
     function convertFloat($value)
@@ -124,11 +127,12 @@ if ( ! function_exists('convertFloat')) {
     }
 }
 
-if ( ! function_exists('getUserId')) {
+if (! function_exists('getUserId')) {
     /**
      * Return user id.
      *
      * @param  $guard
+     *
      * @return int|null
      */
     function getUserId($guard = null)
@@ -137,11 +141,12 @@ if ( ! function_exists('getUserId')) {
     }
 }
 
-if ( ! function_exists('isLoggedIn')) {
+if (! function_exists('isLoggedIn')) {
     /**
      * Return if user is loggedin.
      *
      * @param  $guard
+     *
      * @return bool
      */
     function isLoggedIn($guard = null)
@@ -150,11 +155,12 @@ if ( ! function_exists('isLoggedIn')) {
     }
 }
 
-if ( ! function_exists('convertPercent')) {
+if (! function_exists('convertPercent')) {
     /**
      * Convert percentage to calculateble float.
      *
      * @param $percent
+     *
      * @return float
      */
     function convertPercent($percent)
@@ -163,13 +169,14 @@ if ( ! function_exists('convertPercent')) {
     }
 }
 
-if ( ! function_exists('calculateTax')) {
+if (! function_exists('calculateTax')) {
     /**
      * Get amount of tax in amount.
      *
      * @param mixed $amount
      * @param mixed $tax
      * @param bool  $ex
+     *
      * @return float
      */
     function calculateTax($amount = 0, $tax = 21, $ex = false)
@@ -188,11 +195,12 @@ if ( ! function_exists('calculateTax')) {
     }
 }
 
-if ( ! function_exists('isEnv')) {
+if (! function_exists('isEnv')) {
     /**
      * Is current environment given value?
      *
      * @param string $env
+     *
      * @return bool
      */
     function isEnv($env)
@@ -201,7 +209,7 @@ if ( ! function_exists('isEnv')) {
     }
 }
 
-if ( ! function_exists('isProduction')) {
+if (! function_exists('isProduction')) {
     /**
      * Is current environment production?
      *
@@ -213,7 +221,7 @@ if ( ! function_exists('isProduction')) {
     }
 }
 
-if ( ! function_exists('isDevelopment')) {
+if (! function_exists('isDevelopment')) {
     /**
      * Is current environment production?
      *
@@ -225,11 +233,12 @@ if ( ! function_exists('isDevelopment')) {
     }
 }
 
-if ( ! function_exists('getPHPUser')) {
+if (! function_exists('getPHPUser')) {
     /**
      * Return user that is running the script.
      *
      * @param bool $lowercase
+     *
      * @return string
      */
     function getPHPUser($lowercase = true)
@@ -240,12 +249,13 @@ if ( ! function_exists('getPHPUser')) {
     }
 }
 
-if ( ! function_exists('carbon')) {
+if (! function_exists('carbon')) {
     /**
      * Create a Carbon object from a string.
      *
      * @param string|null               $time
      * @param \DateTimeZone|string|null $timezone
+     *
      * @return \Carbon\Carbon
      */
     function carbon($time = null, $timezone = null)
@@ -254,14 +264,15 @@ if ( ! function_exists('carbon')) {
     }
 }
 
-if ( ! function_exists('getHost')) {
+if (! function_exists('getHost')) {
     /**
      * Get hostname from url.
      *
-     * @deprecated
      * @param string $url
      * @param bool   $subdomain (include subdomain or not)
+     *
      * @return string
+     * @deprecated
      */
     function getHost($url, $subdomain = true)
     {
@@ -296,7 +307,7 @@ if ( ! function_exists('getHost')) {
     }
 }
 
-if ( ! function_exists('randomCode')) {
+if (! function_exists('randomCode')) {
     /**
      * Generate random code.
      *
@@ -308,13 +319,14 @@ if ( ! function_exists('randomCode')) {
     }
 }
 
-if ( ! function_exists('randomFilename')) {
+if (! function_exists('randomFilename')) {
     /**
      * Generate random filename, regenerate if already exists.
      *
      * @param string      $path Path to check
      * @param string      $ext  Extension without dot
      * @param string|null $name Use name as filename (without ext)
+     *
      * @return string
      */
     function randomFilename($path, $ext, $name = null)
@@ -332,11 +344,12 @@ if ( ! function_exists('randomFilename')) {
     }
 }
 
-if ( ! function_exists('ibanMachine')) {
+if (! function_exists('ibanMachine')) {
     /**
      * Convert an IBAN to machine format.
      *
      * @param string $iban
+     *
      * @return mixed|string
      */
     function ibanMachine($iban)
@@ -354,11 +367,12 @@ if ( ! function_exists('ibanMachine')) {
     }
 }
 
-if ( ! function_exists('ibanHuman')) {
+if (! function_exists('ibanHuman')) {
     /**
      * Convert an IBAN to human format.
      *
      * @param string $iban
+     *
      * @return string
      */
     function ibanHuman($iban)
@@ -368,12 +382,13 @@ if ( ! function_exists('ibanHuman')) {
     }
 }
 
-if ( ! function_exists('selectArray')) {
+if (! function_exists('selectArray')) {
     /**
      * Create select dropdown with optional first element.
      *
      * @param                   $array
      * @param bool|string|array $withNull
+     *
      * @return array
      */
     function selectArray($array, $withNull = false)
@@ -383,7 +398,7 @@ if ( ! function_exists('selectArray')) {
             $array = $array->toArray();
         }
 
-        if ( ! $array) {
+        if (! $array) {
             return [];
         }
 
@@ -395,13 +410,14 @@ if ( ! function_exists('selectArray')) {
     }
 }
 
-if ( ! function_exists('nullOrValue')) {
+if (! function_exists('nullOrValue')) {
     /**
      * Return null when string value when is empty
      * Optional, also return null when string value is 0.
      *
      * @param $value
      * @param $skipZero
+     *
      * @return null|string
      */
     function nullOrValue($value, $skipZero = true)
@@ -416,12 +432,13 @@ if ( ! function_exists('nullOrValue')) {
     }
 }
 
-if ( ! function_exists('markdown')) {
+if (! function_exists('markdown')) {
     /**
      * Convert markdown to html.
      *
      * @param string $text
      * @param bool   $lineBreak
+     *
      * @return string
      */
     function markdown($text = '', $lineBreak = true)
@@ -433,11 +450,12 @@ if ( ! function_exists('markdown')) {
     }
 }
 
-if ( ! function_exists('validEmail')) {
+if (! function_exists('validEmail')) {
     /**
      * Check if email is valid.
      *
      * @param string $email
+     *
      * @return bool
      */
     function validEmail($email = '')
@@ -446,12 +464,13 @@ if ( ! function_exists('validEmail')) {
     }
 }
 
-if ( ! function_exists('sanitizeFilename')) {
+if (! function_exists('sanitizeFilename')) {
     /**
      * Sanitize filename (ripped from CodeIgniter).
      *
      * @param string $filename
      * @param string $replace
+     *
      * @return string
      */
     function sanitizeFilename($filename = '', $replace = '-')
@@ -508,11 +527,12 @@ if ( ! function_exists('sanitizeFilename')) {
     }
 }
 
-if ( ! function_exists('isValidXML')) {
+if (! function_exists('isValidXML')) {
     /**
      * Validate XML.
      *
      * @param string $xml
+     *
      * @return bool
      */
     function isValidXML($xml = '')
@@ -532,11 +552,12 @@ if ( ! function_exists('isValidXML')) {
     }
 }
 
-if ( ! function_exists('callBackground')) {
+if (! function_exists('callBackground')) {
     /**
      * @param      $command
      * @param null $before
      * @param null $after
+     *
      * @return mixed
      */
     function callBackground($command, $before = null, $after = null)
@@ -546,12 +567,13 @@ if ( ! function_exists('callBackground')) {
     }
 }
 
-if ( ! function_exists('domainName')) {
+if (! function_exists('domainName')) {
     /**
      * Parse url and return domainname.
      *
      * @param string $url
      * @param bool   $fullHost
+     *
      * @return string|null
      */
     function domainName($url = '', $fullHost = false)
