@@ -1,10 +1,4 @@
 <?php
-/**
- * My custom Laravel helpers.
- *
- * @copyright Copyright (c) 2017
- * @author    IT Can (M. Vugteveen) <info@it-can.nl>
- */
 
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
