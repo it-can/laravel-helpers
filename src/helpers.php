@@ -5,7 +5,6 @@
  * @copyright Copyright (c) 2017
  * @author    IT Can (M. Vugteveen) <info@it-can.nl>
  */
-
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
