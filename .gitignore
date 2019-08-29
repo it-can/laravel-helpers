@@ -1,5 +1,9 @@
-/vendor
-composer.phar
+build
+vendor
+tests/Support/temp
+tests/temp
 composer.lock
-.DS_Store
+phpunit.xml
+.env
 .idea
+.DS_Store
