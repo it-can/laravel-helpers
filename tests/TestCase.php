@@ -12,7 +12,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     use MockeryPHPUnitIntegration;
     public static $functions;
 
-    protected function setUp()
+    public function setUp(): void
     {
         self::$functions = mock();
     }
