@@ -1,15 +1,15 @@
 <?php
 
 use Carbon\Carbon;
-use Ramsey\Uuid\Uuid;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use League\CommonMark\Environment;
-use Illuminate\Support\Facades\Auth;
 use Collective\Html\HtmlFacade as Html;
-use League\CommonMark\CommonMarkConverter;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
 use League\CommonMark\Ext\Table\TableExtension;
+use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
     /**
