@@ -455,14 +455,6 @@ if (! function_exists('markdown')) {
 
         return $converter->convertToHtml($text);
     }
-
-    function markdown2($text = '', $lineBreak = true)
-    {
-        $parsedown = new Parsedown;
-        $parsedown->setBreaksEnabled($lineBreak);
-
-        return $parsedown->text($text);
-    }
 }
 
 if (! function_exists('validEmail')) {
