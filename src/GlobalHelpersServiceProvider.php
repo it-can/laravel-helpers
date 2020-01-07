@@ -47,7 +47,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
         });
 
         Blade::directive('markdown', function ($expression = '') {
-            return "<?php echo markdown($expression, true); ?>";
+            return "<?php echo markdown($expression); ?>";
         });
     }
 }

@@ -1,12 +1,15 @@
 <?php
 
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use League\CommonMark\Environment;
+use Illuminate\Support\Facades\Auth;
+use Collective\Html\HtmlFacade as Html;
+use League\CommonMark\CommonMarkConverter;
+use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\Ext\Table\TableExtension;
 
 if (! function_exists('fatal')) {
     /**
@@ -441,7 +444,19 @@ if (! function_exists('markdown')) {
      *
      * @return string
      */
-    function markdown($text = '', $lineBreak = true)
+    function markdown($text = '')
+    {
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new TableExtension);
+
+        $converter = new CommonMarkConverter([
+            'allow_unsafe_links' => false,
+        ], $environment);
+
+        return $converter->convertToHtml($text);
+    }
+
+    function markdown2($text = '', $lineBreak = true)
     {
         $parsedown = new Parsedown;
         $parsedown->setBreaksEnabled($lineBreak);

@@ -618,4 +618,20 @@ class HelperTest extends TestCase
 
         $this->assertEquals($expected, $response);
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testMarkdownHelper()
+    {
+        $markdownText = '# Hello World!';
+        $expected = "<h1>Hello World!</h1>\n";
+        $this->assertEquals($expected, markdown($markdownText));
+
+        $markdownText = 'This is an example of **emphasis**. Note how the text is *wrapped* with the same character(s) before and after.';
+        $expected = "<p>This is an example of <strong>emphasis</strong>. Note how the text is <em>wrapped</em> with the same character(s) before and after.</p>\n";
+        $this->assertEquals($expected, markdown($markdownText));
+    }
 }
