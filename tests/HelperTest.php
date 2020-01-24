@@ -353,13 +353,6 @@ class HelperTest extends TestCase
         $this->assertEquals(nullOrValue('', false), null);
     }
 
-    public function testMarkdown()
-    {
-        $markdown = new \Parsedown;
-        $result = $markdown->parse('# Something');
-        $this->assertEquals('<h1>Something</h1>', $result);
-    }
-
     /** @test */
     public function email_it_returns_false_for_null()
     {
