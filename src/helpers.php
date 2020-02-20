@@ -1,7 +1,10 @@
 <?php
 
+use Pdp\Cache;
+use Pdp\Manager;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use Pdp\CurlHttpClient;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use League\CommonMark\Environment;
@@ -9,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Collective\Html\HtmlFacade as Html;
 use League\CommonMark\CommonMarkConverter;
 use ITCAN\LaravelHelpers\Artisan\Background;
-use League\CommonMark\Ext\Table\TableExtension;
+use League\CommonMark\Extension\Table\TableExtension;
 
 if (! function_exists('fatal')) {
     /**
@@ -579,15 +582,18 @@ if (! function_exists('domainName')) {
      * Parse url and return domainname.
      *
      * @param string $url
-     * @param bool   $fullHost
      *
      * @return string|null
      */
-    function domainName($url = '', $fullHost = false)
+    function domainName($url = '', $withSubdomain = false)
     {
-        $extract = new \LayerShifter\TLDExtract\Extract;
-        $result = $extract->parse($url);
+        $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
+        $host = parse_url($url, PHP_URL_HOST);
 
-        return ($fullHost) ? $result->getFullHost() : $result->getRegistrableDomain();
+        $manager = new Manager(new Cache, new CurlHttpClient);
+        $rules = $manager->getRules();
+        $domain = $rules->resolve($host);
+
+        return ($withSubdomain) ? $domain->getContent() : $domain->getRegistrableDomain();
     }
 }

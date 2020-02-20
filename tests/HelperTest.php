@@ -505,110 +505,175 @@ class HelperTest extends TestCase
      */
     public function testDomainName()
     {
-        $response = domainName('www.google.nl', true);
-        $expected = 'www.google.nl';
-
+        $response = domainName('www.bier.google.nl');
+        $expected = 'google.nl';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('www.google.nl', false);
+        $response = domainName('www.google.nl');
         $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
 
+        $response = domainName('www.google.nl');
+        $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('www.google.co.uk');
+        $expected = 'google.co.uk';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('www.google.co.uk');
+        $expected = 'google.co.uk';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('test.google.nl');
+        $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('test.google.nl');
+        $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('test.google.co.uk');
+        $expected = 'google.co.uk';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('test.google.co.uk');
+        $expected = 'google.co.uk';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('http://www.google.nl');
+        $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('http://www.google.nl');
+        $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.google.nl');
+        $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.google.nl');
+        $expected = 'google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ');
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+    }
+
+    public function testDomainNameWithSubdomain()
+    {
+        $response = domainName('www.bier.google.nl', true);
+        $expected = 'www.bier.google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('www.google.nl', true);
+        $expected = 'www.google.nl';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('www.google.nl', true);
+        $expected = 'www.google.nl';
         $this->assertEquals($expected, $response);
 
         $response = domainName('www.google.co.uk', true);
         $expected = 'www.google.co.uk';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('www.google.co.uk', false);
-        $expected = 'google.co.uk';
-
+        $response = domainName('www.google.co.uk', true);
+        $expected = 'www.google.co.uk';
         $this->assertEquals($expected, $response);
 
         $response = domainName('test.google.nl', true);
         $expected = 'test.google.nl';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('test.google.nl', false);
-        $expected = 'google.nl';
-
+        $response = domainName('test.google.nl', true);
+        $expected = 'test.google.nl';
         $this->assertEquals($expected, $response);
 
         $response = domainName('test.google.co.uk', true);
         $expected = 'test.google.co.uk';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('test.google.co.uk', false);
-        $expected = 'google.co.uk';
-
+        $response = domainName('test.google.co.uk', true);
+        $expected = 'test.google.co.uk';
         $this->assertEquals($expected, $response);
 
         $response = domainName('http://www.google.nl', true);
         $expected = 'www.google.nl';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('http://www.google.nl', false);
-        $expected = 'google.nl';
-
+        $response = domainName('http://www.google.nl', true);
+        $expected = 'www.google.nl';
         $this->assertEquals($expected, $response);
 
         $response = domainName('https://www.google.nl', true);
         $expected = 'www.google.nl';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.google.nl', false);
-        $expected = 'google.nl';
-
+        $response = domainName('https://www.google.nl', true);
+        $expected = 'www.google.nl';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
-            true);
+        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
         $expected = 'tweakers.net';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
-            false);
+        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
         $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
-            true);
+        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
         $expected = 'www.tweakers.net';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
-            false);
-        $expected = 'tweakers.net';
-
-        $this->assertEquals($expected, $response);
-
-        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
-            true);
-        $expected = 'tweakers.net';
-
-        $this->assertEquals($expected, $response);
-
-        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
-            false);
-        $expected = 'tweakers.net';
-
-        $this->assertEquals($expected, $response);
-
-        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
-            true);
+        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
         $expected = 'www.tweakers.net';
-
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
-            false);
+        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
         $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
 
+        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
+        $expected = 'tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
+        $expected = 'www.tweakers.net';
+        $this->assertEquals($expected, $response);
+
+        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
+        $expected = 'www.tweakers.net';
         $this->assertEquals($expected, $response);
     }
 
