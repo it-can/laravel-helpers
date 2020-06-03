@@ -692,4 +692,16 @@ class HelperTest extends TestCase
         $expected = "<p>This is an example of <strong>emphasis</strong>. Note how the text is <em>wrapped</em> with the same character(s) before and after.</p>\n";
         $this->assertEquals($expected, markdown($markdownText));
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testCustomRangeHelper()
+    {
+        $this->assertCount(11, custom_range(0, 10, 1));
+
+        $this->assertCount(10, custom_range(1, 10, 1));
+    }
 }

@@ -597,3 +597,27 @@ if (! function_exists('domainName')) {
         return ($withSubdomain) ? $domain->getContent() : $domain->getRegistrableDomain();
     }
 }
+
+if (! function_exists('custom_range')) {
+    /**
+     * @param int $start
+     * @param int $end
+     * @param int $step
+     *
+     * @return array
+     */
+    function custom_range($start, $end, $step = 1)
+    {
+        if ($start === 0) {
+            return range($start, $end, $step);
+        }
+
+        $range = [];
+
+        for ($i = $start; $i <= $end; $i += $step) {
+            $range[$i] = $i;
+        }
+
+        return $range;
+    }
+}
