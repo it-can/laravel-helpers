@@ -18,22 +18,6 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             return "<?php echo nl2br(e($string)); ?>";
         });
 
-        Blade::directive('production', function () {
-            return '<?php if (isProduction()): ?>';
-        });
-
-        Blade::directive('endproduction', function () {
-            return '<?php endif; ?>';
-        });
-
-        Blade::directive('notproduction', function () {
-            return '<?php if ( ! isProduction()): ?>';
-        });
-
-        Blade::directive('endnotproduction', function () {
-            return '<?php endif; ?>';
-        });
-
         Blade::directive('lower', function ($string) {
             return "<?php echo strtolower($string); ?>";
         });
