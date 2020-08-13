@@ -2,9 +2,9 @@
 
 namespace ITCAN\LaravelHelpers;
 
-use Response;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Response;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
