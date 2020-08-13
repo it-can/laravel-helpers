@@ -35,7 +35,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             return "<?php echo markdown($expression); ?>";
         });
 
-        Response::macro('pdf', function ($content, $filename, $return_string) {
+        Response::macro('pdf', function ($content, $filename, $return_string = false) {
             if ($return_string) {
                 return $content;
             }
