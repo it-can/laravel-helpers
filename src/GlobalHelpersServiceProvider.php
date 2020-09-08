@@ -4,6 +4,7 @@ namespace ITCAN\LaravelHelpers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Response;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
@@ -33,5 +34,20 @@ class GlobalHelpersServiceProvider extends ServiceProvider
         Blade::directive('markdown', function ($expression = '') {
             return "<?php echo markdown($expression); ?>";
         });
+
+        if (! Response::hasMacro('pdf')) {
+            Response::macro('pdf', function ($content, $filename, $return_string = false) {
+                if ($return_string) {
+                    return $content;
+                }
+
+                $headers = [
+                    'Content-Type'        => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="' . $filename . '"',
+                ];
+
+                return Response::make($content, 200, $headers);
+            });
+        }
     }
 }
