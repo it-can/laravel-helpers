@@ -704,4 +704,88 @@ class HelperTest extends TestCase
 
         $this->assertCount(10, custom_range(1, 10, 1));
     }
+
+    /**
+     * Test cleanLicensePlate() helper
+     *
+     * @return void
+     */
+    public function testCleanPlate()
+    {
+        $plate = '10-KFH-4';
+        $expected = '10KFH4';
+        $this->assertEquals($expected, cleanLicensePlate($plate));
+
+        $plate = '10KFH-4';
+        $this->assertEquals($expected, cleanLicensePlate($plate));
+
+        $plate = '10KFH4';
+        $this->assertEquals($expected, cleanLicensePlate($plate));
+    }
+
+    /**
+     * Test formatPlate() helper
+     *
+     * @return void
+     */
+    public function testFormatPlate()
+    {
+        /**********/
+        // PLATE 1
+        /**********/
+        $plate = 'SK-506-L';
+        $expected = 'SK-506-L';
+
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        $plate = 'SK506-L';
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        $plate = 'SK506L';
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        /**********/
+        // PLATE 2
+        /**********/
+        $plate = 'RX-NL-63';
+        $expected = 'RX-NL-63';
+
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        $plate = 'RXNL-63';
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        $plate = 'RXNL63';
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        /**********/
+        // PLATE 3
+        /**********/
+        $plate = '06-LHS-9';
+        $expected = '06-LHS-9';
+
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        $plate = '06LHS-9';
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        $plate = '06LHS9';
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        /**********/
+        // PLATE 4
+        /**********/
+        $plate = '22CD25';
+        $expected = '22-CD-25';
+
+        $this->assertEquals($expected, formatLicensePlate($plate));
+
+        /**********/
+        // PLATE 5
+        /**********/
+        $plate = 'CDJ355';
+        $expected = 'CDJ355';
+
+        $this->assertEquals($expected, formatLicensePlate($plate));
+    }
 }
