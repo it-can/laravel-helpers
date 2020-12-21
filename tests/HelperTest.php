@@ -242,7 +242,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test randomCode() helper.
+     * Test randomCode() helper
      *
      * @return void
      */
