@@ -706,7 +706,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test cleanLicensePlate() helper
+     * Test cleanLicensePlate() helper.
      *
      * @return void
      */
@@ -724,7 +724,7 @@ class HelperTest extends TestCase
     }
 
     /**
-     * Test formatPlate() helper
+     * Test formatPlate() helper.
      *
      * @return void
      */
