@@ -799,5 +799,54 @@ class HelperTest extends TestCase
         $this->assertFalse(validJson('dfdsafadsadfsfasdfadsfdsa'));
 
         $this->assertTrue(validJson('{ "Id": 1, "Name": "Coke" }'));
+
+        $this->assertTrue(validJson('{"a":5}'));
+        $this->assertTrue(validJson('[1,2,3]'));
+
+        $this->assertFalse(validJson('1'));
+        $this->assertFalse(validJson('1.5'));
+        $this->assertFalse(validJson('true'));
+        $this->assertFalse(validJson('false'));
+        $this->assertFalse(validJson('null'));
+        $this->assertFalse(validJson('hello'));
+        $this->assertFalse(validJson(''));
+
+        $non_json_values = [
+            "12",
+            0,
+            1,
+            12,
+            -1,
+            '',
+            null,
+            0.1,
+            '.',
+            "''",
+            true,
+            false,
+            [],
+            '""',
+            '[]',
+            '   {',
+            '   [',
+        ];
+
+        $json_values = [
+            '{}',
+            '{"foo": "bar"}',
+            '[{}]',
+            '  {}',
+            ' {}  ',
+        ];
+
+        foreach ($non_json_values as $non_json_value) {
+            $is_json = validJson($non_json_value);
+            $this->assertFalse($is_json);
+        }
+
+        foreach ($json_values as $json_value) {
+            $is_json = validJson($json_value);
+            $this->assertTrue($is_json);
+        }
     }
 }

@@ -46,14 +46,6 @@ class Background
     }
 
     /**
-     * @return false|string
-     */
-    protected function phpBinary()
-    {
-        return (new PhpExecutableFinder)->find(false);
-    }
-
-    /**
      * Composer background script.
      *
      * @return string
@@ -83,6 +75,14 @@ class Background
         }
 
         return implode(' && ', $parts);
+    }
+
+    /**
+     * @return false|string
+     */
+    protected function phpBinary()
+    {
+        return (new PhpExecutableFinder)->find(false);
     }
 
     /**
