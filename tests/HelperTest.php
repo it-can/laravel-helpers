@@ -788,4 +788,16 @@ class HelperTest extends TestCase
 
         $this->assertEquals($expected, formatLicensePlate($plate));
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testValidJsonHelper()
+    {
+        $this->assertFalse(validJson('dfdsafadsadfsfasdfadsfdsa'));
+
+        $this->assertTrue(validJson('{ "Id": 1, "Name": "Coke" }'));
+    }
 }

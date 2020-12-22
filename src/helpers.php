@@ -680,3 +680,17 @@ if (! function_exists('formatLicensePlate')) {
         return $plate;
     }
 }
+
+if (! function_exists('validJson')) {
+    /**
+     * @param $json
+     *
+     * @return bool
+     */
+    function validJson($json)
+    {
+        json_decode($json);
+
+        return JSON_ERROR_NONE === json_last_error();
+    }
+}
