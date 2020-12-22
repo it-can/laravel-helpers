@@ -1,18 +1,18 @@
 <?php
 
-use Pdp\Cache;
-use Pdp\Manager;
 use Carbon\Carbon;
-use Ramsey\Uuid\Uuid;
-use Pdp\CurlHttpClient;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use League\CommonMark\Environment;
-use Illuminate\Support\Facades\Auth;
 use Collective\Html\HtmlFacade as Html;
-use League\CommonMark\CommonMarkConverter;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
+use Pdp\Cache;
+use Pdp\CurlHttpClient;
+use Pdp\Manager;
+use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
     /**
@@ -684,7 +684,7 @@ if (! function_exists('formatLicensePlate')) {
 if (! function_exists('validJson')) {
     /**
      * Check if string is valid JSON
-     * Skips values like 123 etc
+     * Skips values like 123 etc.
      *
      * @param $string
      *

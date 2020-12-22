@@ -812,7 +812,7 @@ class HelperTest extends TestCase
         $this->assertFalse(validJson(''));
 
         $non_json_values = [
-            "12",
+            '12',
             0,
             1,
             12,
