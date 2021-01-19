@@ -680,3 +680,13 @@ if (! function_exists('formatLicensePlate')) {
         return $plate;
     }
 }
+
+if (! function_exists('webPSupported')) {
+    /**
+     * @return bool
+     */
+    function webPSupported()
+    {
+        return Str::contains(Str::lower(request()->header('accept')), 'image/webp');
+    }
+}
