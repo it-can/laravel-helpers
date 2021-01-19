@@ -1,18 +1,18 @@
 <?php
 
-use Pdp\Cache;
-use Pdp\Manager;
 use Carbon\Carbon;
-use Ramsey\Uuid\Uuid;
-use Pdp\CurlHttpClient;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use League\CommonMark\Environment;
-use Illuminate\Support\Facades\Auth;
 use Collective\Html\HtmlFacade as Html;
-use League\CommonMark\CommonMarkConverter;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
+use Pdp\Cache;
+use Pdp\CurlHttpClient;
+use Pdp\Manager;
+use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
     /**
@@ -190,7 +190,7 @@ if (! function_exists('calculateTax')) {
         $amount = convertFloat($amount);
         $tax = convertFloat($tax);
 
-        if ($amount == 0 or $tax == 0) {
+        if ($amount == 0 || $tax == 0) {
             return 0;
         }
 
@@ -285,7 +285,7 @@ if (! function_exists('getHost')) {
         // Fix url
         $url = trim($url);
 
-        if (stripos($url, '://') === false and substr($url, 0, 1) != '/') {
+        if (stripos($url, '://') === false && substr($url, 0, 1) != '/') {
             $url = 'http://' . $url;
         }
 
@@ -307,7 +307,7 @@ if (! function_exists('getHost')) {
             'tld'       => $tld,
         ];
 
-        return ($subdomain and ! empty($info['subdomain']))
+        return ($subdomain && ! empty($info['subdomain']))
             ? $info['subdomain'] . '.' . $info['domain']
             : $info['domain'];
     }
@@ -429,7 +429,7 @@ if (! function_exists('nullOrValue')) {
     function nullOrValue($value, $skipZero = true)
     {
         if (is_string($value)) {
-            if ($value === '' or ($skipZero and $value === '0')) {
+            if ($value === '' || ($skipZero && $value === '0')) {
                 return null;
             }
         }
@@ -549,7 +549,7 @@ if (! function_exists('isValidXML')) {
     {
         $xml = trim($xml);
 
-        if (empty($xml) or stripos($xml, '<!DOCTYPE html>') !== false) {
+        if (empty($xml) || stripos($xml, '<!DOCTYPE html>') !== false) {
             return false;
         }
 
@@ -688,5 +688,33 @@ if (! function_exists('webPSupported')) {
     function webPSupported()
     {
         return Str::contains(Str::lower(request()->header('accept')), 'image/webp');
+    }
+}
+
+if (! function_exists('validJson')) {
+    /**
+     * Check if string is valid JSON
+     * Skips values like 123 etc.
+     *
+     * @param $string
+     *
+     * @return bool
+     */
+    function validJson($string)
+    {
+        // 1. Speed up the checking & prevent exception throw when non string is passed
+        if (is_numeric($string) || ! is_string($string) || ! $string) {
+            return false;
+        }
+
+        $cleaned_str = trim($string);
+        if (! $cleaned_str || ! in_array($cleaned_str[0], ['{', '['])) {
+            return false;
+        }
+
+        // 2. Actual checking
+        $str = json_decode($string);
+
+        return (json_last_error() === JSON_ERROR_NONE) && $str && $str !== $string;
     }
 }

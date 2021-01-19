@@ -17,7 +17,7 @@ trait PreventLazyLoading
     {
         $whitelist = $this->allowedLazyRelations ?? [];
 
-        if ($this->exists and ! in_array($method, $whitelist)) {
+        if ($this->exists && ! in_array($method, $whitelist)) {
             $model = get_class($this);
 
             throw new Exception("Tried to load {$method} in {$model}");
