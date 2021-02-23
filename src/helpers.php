@@ -40,7 +40,7 @@ if (! function_exists('cdnUrl')) {
      */
     function cdnUrl($path = '')
     {
-        $cdn = (config('settings.cdn')) ?: config('app.url', url('/'));
+        $cdn = (config('settings.cdn')) ?: config('app.url', '/');
 
         return rtrim($cdn, '/') . '/' . ltrim($path, '/');
     }
