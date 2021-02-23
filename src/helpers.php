@@ -655,9 +655,9 @@ if (! function_exists('formatLicensePlate')) {
             '/^([A-Z]{2})(\d{3})([A-Z]{1})$/',    // 9     XX-999-X    (since 2006)
             '/^([A-Z]{1})(\d{3})([A-Z]{2})$/',    // 10    X-999-XX    (since 2008)
             '/^([A-Z]{3})(\d{2})([A-Z]{1})$/',    // 11    XXX-99-X    (since 2015)
-            '/^([A-Z]{1})(\d{2})([A-Z]{3})$/',    // 12    X-99-XXX
-            '/^(\d{1})([A-Z]{2})(\d{3})$/',       // 13    9-XX-999
-            '/^(\d{3})([A-Z]{2})(\d{1})$/',       // 14    999-XX-9
+            '/^([A-Z]{1})(\d{2})([A-Z]{3})$/',    // 12    X-99-XXX    (not yet)
+            '/^(\d{1})([A-Z]{2})(\d{3})$/',       // 13    9-XX-999    (since 2016)
+            '/^(\d{3})([A-Z]{2})(\d{1})$/',       // 14    999-XX-9    (since 2019)
 
             // likely upcoming plate patterns
             //'^(\d{3})(\d{2})([A-Z]{1})$/',       //       999-99-X
@@ -678,6 +678,16 @@ if (! function_exists('formatLicensePlate')) {
         }
 
         return $plate;
+    }
+}
+
+if (! function_exists('webPSupported')) {
+    /**
+     * @return bool
+     */
+    function webPSupported()
+    {
+        return Str::contains(Str::lower(request()->header('accept')), 'image/webp');
     }
 }
 

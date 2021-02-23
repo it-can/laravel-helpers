@@ -35,6 +35,18 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             return "<?php echo markdown($expression); ?>";
         });
 
+        Blade::directive('webp', function () {
+            return '<?php if (webPSupported()): ?>';
+        });
+
+        Blade::directive('endwebp', function () {
+            return '<?php endif; ?>';
+        });
+
+        Blade::directive('transparent_pixel', function () {
+            return 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+        });
+
         if (! Response::hasMacro('pdf')) {
             Response::macro('pdf', function ($content, $filename, $return_string = false) {
                 if ($return_string) {
