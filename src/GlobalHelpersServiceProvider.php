@@ -5,8 +5,8 @@ namespace ITCAN\LaravelHelpers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\ServiceProvider;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
