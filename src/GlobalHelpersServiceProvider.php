@@ -2,9 +2,11 @@
 
 namespace ITCAN\LaravelHelpers;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Response;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
@@ -61,5 +63,11 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 return Response::make($content, 200, $headers);
             });
         }
+
+        Collection::macro('dot', function ($key, $default = null) {
+            $value = Arr::get($this, $key, $default);
+
+            return is_iterable($value) ? collect($value) : $value;
+        });
     }
 }
