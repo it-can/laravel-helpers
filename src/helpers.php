@@ -9,8 +9,8 @@ use ITCAN\LaravelHelpers\Artisan\Background;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Rules;
 use Pdp\Domain;
+use Pdp\Rules;
 use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
