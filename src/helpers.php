@@ -589,7 +589,7 @@ if (! function_exists('domainName')) {
         $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
         $host = parse_url($url, PHP_URL_HOST);
 
-        $publicSuffixList = Rules::fromPath('./src/List/public_suffix_list.dat');
+        $publicSuffixList = Rules::fromPath(__DIR__ . '/../List/public_suffix_list.dat');
         $domain = Domain::fromIDNA2008($host);
 
         $result = $publicSuffixList->resolve($domain);
