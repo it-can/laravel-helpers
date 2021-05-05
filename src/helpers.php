@@ -9,9 +9,8 @@ use ITCAN\LaravelHelpers\Artisan\Background;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Cache;
-use Pdp\CurlHttpClient;
-use Pdp\Manager;
+use Pdp\Rules;
+use Pdp\Domain;
 use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
@@ -590,11 +589,14 @@ if (! function_exists('domainName')) {
         $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
         $host = parse_url($url, PHP_URL_HOST);
 
-        $manager = new Manager(new Cache, new CurlHttpClient);
-        $rules = $manager->getRules();
-        $domain = $rules->resolve($host);
+        $publicSuffixList = Rules::fromPath('./src/List/public_suffix_list.dat');
+        $domain = Domain::fromIDNA2008($host);
 
-        return ($withSubdomain) ? $domain->getContent() : $domain->getRegistrableDomain();
+        $result = $publicSuffixList->resolve($domain);
+
+        return ($withSubdomain) ?
+            $result->domain()->toString() :
+            $result->registrableDomain()->toString();
     }
 }
 
