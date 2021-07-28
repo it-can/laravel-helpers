@@ -6,10 +6,13 @@ use DateTime;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
+<<<<<<< HEAD
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+=======
+use Illuminate\Support\ServiceProvider;
+>>>>>>> 1fcb2208b2096122fcb7b21933ae54acccc8852a
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
