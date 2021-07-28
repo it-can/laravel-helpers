@@ -3,12 +3,12 @@
 namespace ITCAN\LaravelHelpers;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\ServiceProvider;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
@@ -69,7 +69,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
         });
 
         /**
-         * Add dot function to Collection
+         * Add dot function to Collection.
          */
         Collection::macro('dot', function ($key, $default = null) {
             $value = Arr::get($this, $key, $default);
