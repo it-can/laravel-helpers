@@ -433,6 +433,11 @@ class HelperTest extends TestCase
         $this->assertEquals('bla-bla.pdf', $response);
     }
 
+    protected function getHtmlFileLocation($name)
+    {
+        return __DIR__ . '/HTML/' . $name;
+    }
+
     protected function getXmlFileLocation($name)
     {
         return __DIR__ . '/XML/' . $name;
@@ -848,5 +853,20 @@ class HelperTest extends TestCase
             $is_json = validJson($json_value);
             $this->assertTrue($is_json);
         }
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testCompressHtmlPDF()
+    {
+        $html = file_get_contents($this->getHtmlFileLocation('org.html'));
+        $expected = file_get_contents($this->getHtmlFileLocation('compressed.html'));
+
+        //var_dump(compressHtmlPDF($html));die;
+
+        $this->assertEquals($expected, compressHtmlPDF($html));
     }
 }

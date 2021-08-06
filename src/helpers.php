@@ -1,17 +1,18 @@
 <?php
 
-use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
-use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Domain;
 use Pdp\Rules;
+use Pdp\Domain;
+use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use voku\helper\HtmlMin;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use League\CommonMark\Environment;
+use Illuminate\Support\Facades\Auth;
+use Collective\Html\HtmlFacade as Html;
+use League\CommonMark\CommonMarkConverter;
+use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\Extension\Table\TableExtension;
 
 if (! function_exists('fatal')) {
     /**
@@ -718,5 +719,26 @@ if (! function_exists('validJson')) {
         $str = json_decode($string);
 
         return (json_last_error() === JSON_ERROR_NONE) && $str && $str !== $string;
+    }
+}
+
+if (! function_exists('compressHtmlPDF')) {
+    /**
+     * Remove spaces and other stuff for TCPDF because of indent issues
+     *
+     * @param $html
+     *
+     * @return array|string
+     */
+    function compressHtmlPDF($html)
+    {
+        $html = (new HtmlMin)
+            ->doOptimizeAttributes(false)
+            ->doRemoveOmittedHtmlTags(false)
+            ->doRemoveOmittedQuotes(false)
+            ->doSortHtmlAttributes(false)
+            ->minify($html);
+
+        return str_replace(['> ', ' <'], ['>', '<'], $html);
     }
 }
