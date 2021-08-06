@@ -866,5 +866,10 @@ class HelperTest extends TestCase
         $expected = file_get_contents($this->getHtmlFileLocation('compressed.html'));
 
         $this->assertEquals($expected, compressHtmlPDF($html));
+
+        $html = file_get_contents($this->getHtmlFileLocation('org2.html'));
+        $expected = file_get_contents($this->getHtmlFileLocation('compressed2.html'));
+
+        $this->assertEquals($expected, compressHtmlPDF($html));
     }
 }

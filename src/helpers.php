@@ -1,18 +1,18 @@
 <?php
 
-use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
-use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Domain;
 use Pdp\Rules;
+use Pdp\Domain;
+use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use voku\helper\HtmlMin;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use League\CommonMark\Environment;
+use Illuminate\Support\Facades\Auth;
+use Collective\Html\HtmlFacade as Html;
+use League\CommonMark\CommonMarkConverter;
+use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\Extension\Table\TableExtension;
 
 if (! function_exists('fatal')) {
     /**
@@ -739,6 +739,21 @@ if (! function_exists('compressHtmlPDF')) {
             ->doSortHtmlAttributes(false)
             ->minify($html);
 
-        return str_replace(['> ', ' </'], ['>', '</'], $html);
+        // Remove spaces after <td>
+        $html = preg_replace('/<td[^>]*?>\s+/', '<td>', $html);
+
+        // Remove spaces before </td>
+        $html = preg_replace('/\s+<\/td>/', '</td>', $html);
+
+        // Remove spaces between </td> <td> ==>   </td><td>
+        $html = preg_replace('/>(\s)+</m', '><', $html);
+
+        // Remove spaces before br
+        $html = preg_replace('/\s+<br>/', '<br>', $html);
+
+        // Remove spaces after br
+        $html = preg_replace('/<br>\s+/', '<br>', $html);
+
+        return $html;
     }
 }
