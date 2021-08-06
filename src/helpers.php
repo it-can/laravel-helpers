@@ -739,6 +739,6 @@ if (! function_exists('compressHtmlPDF')) {
             ->doSortHtmlAttributes(false)
             ->minify($html);
 
-        return str_replace(['> ', ' <'], ['>', '<'], $html);
+        return str_replace(['> ', ' </'], ['>', '</'], $html);
     }
 }
