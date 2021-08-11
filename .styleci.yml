@@ -2,15 +2,17 @@ preset: laravel
 
 risky: false
 
+enabled:
+    - length_ordered_imports
 disabled:
-  - concat_without_spaces
-  - alpha_ordered_imports
+    - concat_without_spaces
+    - alpha_ordered_imports
 
 finder:
-  exclude:
-    - modules
-    - node_modules
-    - storage
-    - vendor
-  name: "*.php"
-  not-name: "*.blade.php"
+    exclude:
+        - modules
+        - node_modules
+        - storage
+        - vendor
+    name: "*.php"
+    not-name: "*.blade.php"
