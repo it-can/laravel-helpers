@@ -1,18 +1,17 @@
 <?php
 
+use Pdp\Rules;
+use Pdp\Domain;
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
+use Collective\Html\HtmlFacade as Html;
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Domain;
-use Pdp\Rules;
-use Ramsey\Uuid\Uuid;
-use voku\helper\HtmlMin;
 
 if (! function_exists('fatal')) {
     /**
@@ -732,30 +731,24 @@ if (! function_exists('compressHtmlPDF')) {
      */
     function compressHtmlPDF($html)
     {
-        $html = (new HtmlMin)
-            ->doOptimizeAttributes(false)
-            ->doRemoveOmittedHtmlTags(false)
-            ->doRemoveOmittedQuotes(false)
-            ->doSortHtmlAttributes(false)
-            ->minify($html);
+        // trim each line.
+        $html = preg_replace('/^\\s+|\\s+$/mu', '', $html);
 
-        $params = collect([
-            // Remove spaces after <td>
-            '/<td[^>]*?>\s+/' => '<td>',
+        // remove ws around block/undisplayed elements
+        $html = preg_replace('/\\s+(<\\/?(?:area|article|aside|base(?:font)?|blockquote|body'
+            . '|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
+            . '|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
+            . '|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h||r|foot|itle)'
+            . '|ul|video)\\b[^>]*>)/iu', '$1', $html);
 
-            // Remove spaces before </td>
-            '/\s+<\/td>/'     => '</td>',
+        // remove ws outside of all elements
+        $html = preg_replace(
+            '/>(\\s(?:\\s*))?([^<]+)(\\s(?:\s*))?</u',
+            '>$1$2$3<',
+            $html
+        );
 
-            // Remove spaces between </td> <td> --> </td><td>
-            '/>(\s)+</m'      => '><',
-
-            // Remove spaces before br
-            '/\s+<br>/'       => '<br>',
-
-            // Remove spaces after br
-            '/<br>\s+/'       => '<br>',
-        ]);
-
-        return preg_replace($params->keys()->toArray(), $params->values()->toArray(), $html);
+        // Remove newlines
+        return str_replace(["\n", "\r"], '', $html);
     }
 }
