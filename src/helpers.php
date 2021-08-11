@@ -739,21 +739,23 @@ if (! function_exists('compressHtmlPDF')) {
             ->doSortHtmlAttributes(false)
             ->minify($html);
 
-        // Remove spaces after <td>
-        $html = preg_replace('/<td[^>]*?>\s+/', '<td>', $html);
+        $params = collect([
+            // Remove spaces after <td>
+            '/<td[^>]*?>\s+/' => '<td>',
 
-        // Remove spaces before </td>
-        $html = preg_replace('/\s+<\/td>/', '</td>', $html);
+            // Remove spaces before </td>
+            '/\s+<\/td>/'     => '</td>',
 
-        // Remove spaces between </td> <td> ==>   </td><td>
-        $html = preg_replace('/>(\s)+</m', '><', $html);
+            // Remove spaces between </td> <td> --> </td><td>
+            '/>(\s)+</m'      => '><',
 
-        // Remove spaces before br
-        $html = preg_replace('/\s+<br>/', '<br>', $html);
+            // Remove spaces before br
+            '/\s+<br>/'       => '<br>',
 
-        // Remove spaces after br
-        $html = preg_replace('/<br>\s+/', '<br>', $html);
+            // Remove spaces after br
+            '/<br>\s+/'       => '<br>',
+        ]);
 
-        return $html;
+        return preg_replace($params->keys()->toArray(), $params->values()->toArray(), $html);
     }
 }
