@@ -4,6 +4,7 @@ risky: false
 
 disabled:
   - concat_without_spaces
+  - alpha_ordered_imports
 
 finder:
   exclude:
