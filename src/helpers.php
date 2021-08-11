@@ -748,7 +748,6 @@ if (! function_exists('compressHtmlPDF')) {
             $html
         );
 
-        // Remove newlines
-        return str_replace(["\n", "\r"], '', $html);
+        return $html;
     }
 }
