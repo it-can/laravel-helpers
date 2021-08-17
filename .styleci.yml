@@ -1,14 +1,14 @@
-preset: laravel
 
-risky: false
-
-enabled:
+php:
+  preset: laravel
+  version: 8
+  risky: false
+  enabled:
     - length_ordered_imports
-disabled:
+  disabled:
     - concat_without_spaces
     - alpha_ordered_imports
-
-finder:
+   finder:
     exclude:
         - modules
         - node_modules
