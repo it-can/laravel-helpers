@@ -7,11 +7,11 @@ php:
     disabled:
         - concat_without_spaces
         - alpha_ordered_imports
-        finder:
-            exclude:
-                - modules
-                - node_modules
-                - storage
-                - vendor
-            name: "*.php"
-            not-name: "*.blade.php"
+    finder:
+        exclude:
+            - modules
+            - node_modules
+            - storage
+            - vendor
+        name: "*.php"
+        not-name: "*.blade.php"
