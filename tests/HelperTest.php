@@ -435,12 +435,12 @@ class HelperTest extends TestCase
 
     protected function getHtmlFileLocation($name)
     {
-        return __DIR__ . '/HTML/' . $name;
+        return __DIR__.'/HTML/'.$name;
     }
 
     protected function getXmlFileLocation($name)
     {
-        return __DIR__ . '/XML/' . $name;
+        return __DIR__.'/XML/'.$name;
     }
 
     protected function getXmlFileContent($name)
