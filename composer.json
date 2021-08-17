@@ -20,8 +20,8 @@
         "jeremykendall/php-domain-parser": "^6.1"
     },
     "require-dev": {
-        "laravel/framework": "5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
-        "laravelcollective/html": "5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
+        "laravel/framework": "^6.0|^7.0|^8.0",
+        "laravelcollective/html": "^6.0|^7.0|^8.0",
         "mockery/mockery": "^1.0",
         "nesbot/carbon": "^1.26.3 || ^2.0",
         "phpunit/phpunit": "^8.5",
