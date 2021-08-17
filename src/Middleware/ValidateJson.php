@@ -38,7 +38,7 @@ class ValidateJson
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new RuntimeException(
                 'Unable to parse JSON data: '
-                .json_last_error_msg()
+                . json_last_error_msg()
             );
         }
 

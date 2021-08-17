@@ -1,17 +1,17 @@
 <?php
 
+use Pdp\Rules;
+use Pdp\Domain;
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
+use Collective\Html\HtmlFacade as Html;
 use League\CommonMark\CommonMarkConverter;
+use ITCAN\LaravelHelpers\Artisan\Background;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Domain;
-use Pdp\Rules;
-use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
     /**
@@ -41,7 +41,7 @@ if (! function_exists('cdnUrl')) {
     {
         $cdn = (config('settings.cdn')) ?: config('app.url', '/');
 
-        return rtrim($cdn, '/').'/'.ltrim($path, '/');
+        return rtrim($cdn, '/') . '/' . ltrim($path, '/');
     }
 }
 
@@ -83,7 +83,7 @@ if (! function_exists('uploadUrl')) {
      */
     function uploadUrl($url)
     {
-        return cdnUrl('uploads/'.ltrim($url, '/'));
+        return cdnUrl('uploads/' . ltrim($url, '/'));
     }
 }
 
@@ -97,7 +97,7 @@ if (! function_exists('imgUrl')) {
      */
     function imgUrl($url)
     {
-        return cdnUrl('img/'.ltrim($url, '/'));
+        return cdnUrl('img/' . ltrim($url, '/'));
     }
 }
 
@@ -285,7 +285,7 @@ if (! function_exists('getHost')) {
         $url = trim($url);
 
         if (stripos($url, '://') === false && substr($url, 0, 1) != '/') {
-            $url = 'http://'.$url;
+            $url = 'http://' . $url;
         }
 
         $parsedUrl = parse_url($url);
@@ -294,20 +294,20 @@ if (! function_exists('getHost')) {
         $host = array_pop($parts);
 
         if (strlen($tld) === 2 && strlen($host) <= 3) {
-            $tld = $host.'.'.$tld;
+            $tld = $host . '.' . $tld;
             $host = array_pop($parts);
         }
 
         $info = [
             'protocol'  => $parsedUrl['scheme'],
             'subdomain' => implode('.', $parts),
-            'domain'    => $host.'.'.$tld,
+            'domain'    => $host . '.' . $tld,
             'host'      => $host,
             'tld'       => $tld,
         ];
 
         return ($subdomain && ! empty($info['subdomain']))
-            ? $info['subdomain'].'.'.$info['domain']
+            ? $info['subdomain'] . '.' . $info['domain']
             : $info['domain'];
     }
 }
@@ -338,14 +338,14 @@ if (! function_exists('randomFilename')) {
     {
         $ext = Str::lower(str_replace('.', '', $ext));
         $filename = ($name) ? Str::slug(Str::limit($name, 50), '_') : Str::random(30);
-        $filename = Str::lower($filename).'_'.time();
+        $filename = Str::lower($filename) . '_' . time();
 
         // Loop until file does not exists
-        while (file_exists($path.'/'.$filename.'.'.$ext)) {
+        while (file_exists($path . '/' . $filename . '.' . $ext)) {
             $filename .= rand(0, 99999);
         }
 
-        return $filename.'.'.$ext;
+        return $filename . '.' . $ext;
     }
 }
 
@@ -586,10 +586,10 @@ if (! function_exists('domainName')) {
      */
     function domainName($url = '', $withSubdomain = false)
     {
-        $url = 'http://'.str_replace(['http://', 'https://'], '', $url);
+        $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
         $host = parse_url($url, PHP_URL_HOST);
 
-        $publicSuffixList = Rules::fromPath(__DIR__.'/../List/public_suffix_list.dat');
+        $publicSuffixList = Rules::fromPath(__DIR__ . '/../List/public_suffix_list.dat');
         $domain = Domain::fromIDNA2008($host);
 
         $result = $publicSuffixList->resolve($domain);
@@ -736,10 +736,10 @@ if (! function_exists('compressHtmlPDF')) {
 
         // remove ws around block/undisplayed elements
         $html = preg_replace('/\\s+(<\\/?(?:area|article|aside|base(?:font)?|blockquote|body'
-            .'|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
-            .'|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
-            .'|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h||r|foot|itle)'
-            .'|ul|video)\\b[^>]*>)/iu', '$1', $html);
+            . '|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
+            . '|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
+            . '|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h||r|foot|itle)'
+            . '|ul|video)\\b[^>]*>)/iu', '$1', $html);
 
         // remove ws outside of all elements
         $html = preg_replace(

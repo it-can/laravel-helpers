@@ -3,13 +3,13 @@
 namespace ITCAN\LaravelHelpers;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
@@ -62,7 +62,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
 
             $headers = [
                 'Content-Type'        => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="'.$filename.'"',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
             ];
 
             return Response::make($content, 200, $headers);
@@ -93,7 +93,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
 
                         return preg_replace(
                             '/\?/',
-                            is_string($binding) ? "'".$binding."'" : $binding,
+                            is_string($binding) ? "'" . $binding . "'" : $binding,
                             $sql,
                             1
                         );
