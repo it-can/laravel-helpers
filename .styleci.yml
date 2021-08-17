@@ -1,18 +1,11 @@
-preset: laravel
-version: 8
-risky: false
-
-enabled:
-    - length_ordered_imports
-disabled:
-    - concat_without_spaces
-    - alpha_ordered_imports
-
-finder:
-    exclude:
-        - modules
-        - node_modules
-        - storage
-        - vendor
-    name: "*.php"
-    not-name: "*.blade.php"
+php:
+    preset: laravel
+    version: 8
+    disabled:
+        - no_unused_imports
+    finder:
+        not-name:
+            - index.php
+            - server.php
+js: false
+css: false
