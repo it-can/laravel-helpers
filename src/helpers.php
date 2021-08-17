@@ -1,17 +1,17 @@
 <?php
 
+use Pdp\Rules;
+use Pdp\Domain;
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
+use Collective\Html\HtmlFacade as Html;
 use League\CommonMark\CommonMarkConverter;
+use ITCAN\LaravelHelpers\Artisan\Background;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Domain;
-use Pdp\Rules;
-use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
     /**
