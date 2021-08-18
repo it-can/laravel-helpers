@@ -751,3 +751,15 @@ if (! function_exists('compressHtmlPDF')) {
         return $html;
     }
 }
+
+if (! function_exists('commaListToArray')) {
+    /**
+     * @param string $text
+     *
+     * @return array
+     */
+    function commaListToArray($text)
+    {
+        return array_filter(array_map('trim', explode(',', $text)));
+    }
+}

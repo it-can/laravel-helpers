@@ -435,12 +435,12 @@ class HelperTest extends TestCase
 
     protected function getHtmlFileLocation($name)
     {
-        return __DIR__.'/HTML/'.$name;
+        return __DIR__ . '/HTML/' . $name;
     }
 
     protected function getXmlFileLocation($name)
     {
-        return __DIR__.'/XML/'.$name;
+        return __DIR__ . '/XML/' . $name;
     }
 
     protected function getXmlFileContent($name)
@@ -871,5 +871,37 @@ class HelperTest extends TestCase
         $expected = file_get_contents($this->getHtmlFileLocation('compressed2.html'));
 
         $this->assertEquals($expected, compressHtmlPDF($html));
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testCommaListToArray()
+    {
+        $string = 'test@test.com';
+        $expected = ['test@test.com'];
+        $this->assertEquals($expected, commaListToArray($string));
+
+        $string = '';
+        $expected = [];
+        $this->assertEquals($expected, commaListToArray($string));
+
+        $string = ' ';
+        $expected = [];
+        $this->assertEquals($expected, commaListToArray($string));
+
+        $string = 'test@test.com,test@test2.com';
+        $expected = ['test@test.com', 'test@test2.com'];
+        $this->assertEquals($expected, commaListToArray($string));
+
+        $string = 'test@test.com, test@test2.com';
+        $expected = ['test@test.com', 'test@test2.com'];
+        $this->assertEquals($expected, commaListToArray($string));
+
+        $string = 'test@test.com   ,        test@test2.com';
+        $expected = ['test@test.com', 'test@test2.com'];
+        $this->assertEquals($expected, commaListToArray($string));
     }
 }
