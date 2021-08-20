@@ -1,7 +1,5 @@
 <?php
 
-use Pdp\Rules;
-use Pdp\Domain;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
@@ -581,22 +579,24 @@ if (! function_exists('domainName')) {
      * Parse url and return domainname.
      *
      * @param string $url
+     * @param bool   $withSubdomain
      *
      * @return string|null
      */
-    function domainName($url = '', $withSubdomain = false)
+    function domainName($url, $withSubdomain = false)
     {
         $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
         $host = parse_url($url, PHP_URL_HOST);
 
-        $publicSuffixList = Rules::fromPath(__DIR__ . '/../List/public_suffix_list.dat');
-        $domain = Domain::fromIDNA2008($host);
+        $nr = Str::contains($host, ['co.uk']) ? 3 : 2;
+        $host = explode('.', $host);
 
-        $result = $publicSuffixList->resolve($domain);
+        $domain = implode('.', array_slice($host, -$nr, $nr));
+        $subdomain = implode('.', array_slice($host, 0, -$nr));
 
-        return ($withSubdomain) ?
-            $result->domain()->toString() :
-            $result->registrableDomain()->toString();
+        return ($withSubdomain and ! empty($subdomain)) ?
+            $subdomain . '.' . $domain :
+            $domain;
     }
 }
 
