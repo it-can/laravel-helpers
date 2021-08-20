@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use Utopia\Domains\Domain;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -588,15 +589,11 @@ if (! function_exists('domainName')) {
         $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
         $host = parse_url($url, PHP_URL_HOST);
 
-        $nr = Str::contains($host, ['co.uk']) ? 3 : 2;
-        $host = explode('.', $host);
+        $domain = new Domain($host);
 
-        $domain = implode('.', array_slice($host, -$nr, $nr));
-        $subdomain = implode('.', array_slice($host, 0, -$nr));
-
-        return ($withSubdomain and ! empty($subdomain)) ?
-            $subdomain . '.' . $domain :
-            $domain;
+        return ($withSubdomain) ?
+            $domain->get() :
+            $domain->getRegisterable();
     }
 }
 
