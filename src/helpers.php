@@ -1,17 +1,16 @@
 <?php
 
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
+use Ramsey\Uuid\Uuid;
+use Utopia\Domains\Domain;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
+use Collective\Html\HtmlFacade as Html;
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
-use Pdp\Domain;
-use Pdp\Rules;
-use Ramsey\Uuid\Uuid;
 
 if (! function_exists('fatal')) {
     /**
@@ -581,22 +580,20 @@ if (! function_exists('domainName')) {
      * Parse url and return domainname.
      *
      * @param string $url
+     * @param bool   $withSubdomain
      *
      * @return string|null
      */
-    function domainName($url = '', $withSubdomain = false)
+    function domainName($url, $withSubdomain = false)
     {
         $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
         $host = parse_url($url, PHP_URL_HOST);
 
-        $publicSuffixList = Rules::fromPath(__DIR__ . '/../List/public_suffix_list.dat');
-        $domain = Domain::fromIDNA2008($host);
-
-        $result = $publicSuffixList->resolve($domain);
+        $domain = new Domain($host);
 
         return ($withSubdomain) ?
-            $result->domain()->toString() :
-            $result->registrableDomain()->toString();
+            $domain->get() :
+            $domain->getRegisterable();
     }
 }
 
@@ -718,5 +715,48 @@ if (! function_exists('validJson')) {
         $str = json_decode($string);
 
         return (json_last_error() === JSON_ERROR_NONE) && $str && $str !== $string;
+    }
+}
+
+if (! function_exists('compressHtmlPDF')) {
+    /**
+     * Remove spaces and other stuff for TCPDF because of indent issues.
+     *
+     * @param $html
+     *
+     * @return array|string
+     */
+    function compressHtmlPDF($html)
+    {
+        // trim each line.
+        $html = preg_replace('/^\\s+|\\s+$/mu', '', $html);
+
+        // remove ws around block/undisplayed elements
+        $html = preg_replace('/\\s+(<\\/?(?:area|article|aside|base(?:font)?|blockquote|body'
+            . '|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
+            . '|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
+            . '|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h||r|foot|itle)'
+            . '|ul|video)\\b[^>]*>)/iu', '$1', $html);
+
+        // remove ws outside of all elements
+        $html = preg_replace(
+            '/>(\\s(?:\\s*))?([^<]+)(\\s(?:\s*))?</u',
+            '>$1$2$3<',
+            $html
+        );
+
+        return $html;
+    }
+}
+
+if (! function_exists('commaListToArray')) {
+    /**
+     * @param string $text
+     *
+     * @return array
+     */
+    function commaListToArray($text)
+    {
+        return array_filter(array_map('trim', explode(',', $text)));
     }
 }
