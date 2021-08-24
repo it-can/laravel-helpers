@@ -1,6 +1,6 @@
-[![StyleCI](https://github.styleci.io/repos/133985356/shield?branch=master)](https://github.styleci.io/repos/133985356)
+[![tests](https://github.com/it-can/laravel-helpers/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/it-can/laravel-helpers/actions/workflows/main.yml)
 
-[![Build Status](https://app.travis-ci.com/it-can/laravel-helpers.svg?branch=master)](https://app.travis-ci.com/it-can/laravel-helpers)
+[![StyleCI](https://github.styleci.io/repos/133985356/shield?branch=master)](https://github.styleci.io/repos/133985356)
 
 <a href="https://packagist.org/packages/it-can/laravel-helpers"><img src="https://img.shields.io/packagist/v/it-can/laravel-helpers" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/it-can/laravel-helpers"><img src="https://img.shields.io/packagist/dt/it-can/laravel-helpers" alt="Total Downloads"></a>
