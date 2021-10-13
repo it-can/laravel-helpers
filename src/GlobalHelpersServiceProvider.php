@@ -49,7 +49,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
         });
 
         Blade::directive('transparent_pixel', function () {
-            return 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+            return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=';
         });
 
         /*
