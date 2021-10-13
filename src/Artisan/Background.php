@@ -14,9 +14,9 @@ class Background
     private $after;
 
     /**
-     * @param      $command
-     * @param null $before
-     * @param null $after
+     * @param  $command
+     * @param  null  $before
+     * @param  null  $after
      */
     public function __construct($command, $before = null, $after = null)
     {
@@ -26,10 +26,9 @@ class Background
     }
 
     /**
-     * @param      $command
-     * @param null $before
-     * @param null $after
-     *
+     * @param  $command
+     * @param  null  $before
+     * @param  null  $after
      * @return Background
      */
     public static function factory($command, $before = null, $after = null)
