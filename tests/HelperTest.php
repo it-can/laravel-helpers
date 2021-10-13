@@ -9,9 +9,8 @@ class HelperTest extends TestCase
     /**
      * Check if a given string is a valid UUID.
      *
-     * @param string $uuid The string to check
-     *
-     * @return  bool
+     * @param  string  $uuid  The string to check
+     * @return bool
      */
     protected function isValidUuid($uuid = '')
     {
