@@ -29,9 +29,8 @@ class NoCacheHeadersMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return \Illuminate\Http\Response
      */
     public function handle($request, Closure $next)
@@ -65,8 +64,7 @@ class NoCacheHeadersMiddleware
     /**
      * Determine if the request has a URI that should pass through.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
     protected function inExceptArray($request)

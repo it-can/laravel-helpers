@@ -7,8 +7,7 @@ trait PreventLazyLoading
     /**
      * Get a relationship value from a method.
      *
-     * @param string $method
-     *
+     * @param  string  $method
      * @return mixed
      *
      * @throws \LogicException
