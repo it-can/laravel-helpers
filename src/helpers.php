@@ -120,7 +120,7 @@ if (! function_exists('convertFloat')) {
      */
     function convertFloat($value)
     {
-        return is_float($value) ? $value : floatval(str_replace(',', '.', $value));
+        return is_float($value) ? $value : (float) str_replace(',', '.', $value);
     }
 }
 
