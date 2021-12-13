@@ -1,0 +1,29 @@
+sudo: required
+
+language: php
+
+php:
+  - 7.4
+  - 8.0
+  - 8.1
+
+env:
+  matrix:
+    - COMPOSER_FLAGS=""
+
+before_install:
+  - sudo apt-get update
+  - travis_retry composer self-update
+
+install:
+  - travis_retry composer update --prefer-source $COMPOSER_FLAGS
+
+script:
+  - vendor/bin/phpunit
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
