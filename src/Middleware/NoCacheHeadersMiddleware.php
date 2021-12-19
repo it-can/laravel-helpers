@@ -15,8 +15,8 @@ class NoCacheHeadersMiddleware
      */
     protected $headers = [
         'pragma'        => 'no-cache',
-        'expires'       => 'Fri, 01 Jan 1990 00:00:00 GMT',
-        'cache-control' => 'max-age=0, must-revalidate, no-cache, no-store, private',
+        'expires'       => 'Thu, 19 Nov 1981 08:52:00 GMT',
+        'cache-control' => 'private, max-age=0, proxy-revalidate, no-cache, must-revalidate',
     ];
 
     /**
@@ -27,43 +27,10 @@ class NoCacheHeadersMiddleware
     protected $except = [];
 
     /**
-     * Return all headers.
-     *
-     * @return array
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Determine if the request has a URI that should pass through.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return bool
-     */
-    protected function inExceptArray($request)
-    {
-        foreach ($this->except as $except) {
-            if ($except !== '/') {
-                $except = trim($except, '/');
-            }
-
-            if ($request->fullUrlIs($except) || $request->is($except)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return \Illuminate\Http\Response
      */
     public function handle($request, Closure $next)
@@ -92,5 +59,36 @@ class NoCacheHeadersMiddleware
         }
 
         return $response;
+    }
+
+    /**
+     * Determine if the request has a URI that should pass through.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function inExceptArray($request)
+    {
+        foreach ($this->except as $except) {
+            if ($except !== '/') {
+                $except = trim($except, '/');
+            }
+
+            if ($request->fullUrlIs($except) || $request->is($except)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return all headers.
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 }
