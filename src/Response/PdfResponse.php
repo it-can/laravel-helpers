@@ -1,5 +1,7 @@
 <?php
 
+namespace ITCAN\LaravelHelpers\Response;
+
 use Illuminate\Http\Response;
 
 class PdfResponse extends Response
