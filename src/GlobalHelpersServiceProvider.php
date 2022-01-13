@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
@@ -50,22 +49,6 @@ class GlobalHelpersServiceProvider extends ServiceProvider
 
         Blade::directive('transparent_pixel', function () {
             return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=';
-        });
-
-        /*
-         * Allow to return PDF files in browser instead of download
-         */
-        Response::macro('pdf', function ($content, $filename, $return_string = false) {
-            if ($return_string) {
-                return $content;
-            }
-
-            $headers = [
-                'Content-Type'        => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . $filename . '"',
-            ];
-
-            return Response::make($content, 200, $headers);
         });
 
         /**
