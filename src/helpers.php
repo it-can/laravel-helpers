@@ -315,10 +315,10 @@ if (! function_exists('randomFilename')) {
     /**
      * Generate random filename, regenerate if already exists.
      *
-     * @param  string       $path       Path to check
-     * @param  string       $ext        Extension without dot
-     * @param  string|null  $name       Use name as filename (without ext)
-     * @param  bool         $timestamp  Add timestamp to filename
+     * @param  string  $path  Path to check
+     * @param  string  $ext  Extension without dot
+     * @param  string|null  $name  Use name as filename (without ext)
+     * @param  bool  $timestamp  Add timestamp to filename
      * @return string
      */
     function randomFilename($path, $ext, $name = null, $timestamp = true)
@@ -327,11 +327,9 @@ if (! function_exists('randomFilename')) {
         $filename = ($name) ? Str::slug(Str::limit($name, 50), '_') : Str::random(30);
         $filename = Str::lower($filename);
 
-        if ($timestamp)
-        {
+        if ($timestamp) {
             $filename .= '_' . time();
         }
-
 
         // Loop until file does not exists
         while (file_exists($path . '/' . $filename . '.' . $ext)) {
