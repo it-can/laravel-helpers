@@ -130,15 +130,10 @@ if (! function_exists('convertFloat')) {
     {
         $value = $value ?? 0;
 
-        if (is_float($value)) {
-            return $value;
-        }
+        $val = str_replace(',', '.', $value);
+        $val = preg_replace('/\.(?=.*\.)/', '', $val);
 
-        if (Str::contains($value, ',')) {
-            return (float) str_replace(['.', ','], ['', '.'], $value);
-        }
-
-        return (float) $value;
+        return (float) $val;
     }
 }
 
