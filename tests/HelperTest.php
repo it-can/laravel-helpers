@@ -9,7 +9,8 @@ class HelperTest extends TestCase
     /**
      * Check if a given string is a valid UUID.
      *
-     * @param  string  $uuid  The string to check
+     * @param string $uuid The string to check
+     *
      * @return bool
      */
     protected function isValidUuid($uuid = '')
@@ -55,6 +56,14 @@ class HelperTest extends TestCase
 
         $expected = 0;
         $response = convertFloat(null);
+        $this->assertEquals($expected, $response);
+
+        $expected = 1000.55;
+        $response = convertFloat('1.000,55');
+        $this->assertEquals($expected, $response);
+
+        $expected = 45359.84;
+        $response = convertFloat('45.359,84');
         $this->assertEquals($expected, $response);
     }
 
