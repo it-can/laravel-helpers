@@ -9,9 +9,9 @@ trait ApiResponse
     /**
      * Return a success JSON response.
      *
-     * @param array|string $data
-     * @param string       $message
-     * @param int|null     $code
+     * @param  array|string  $data
+     * @param  string  $message
+     * @param  int|null  $code
      * @return \Illuminate\Http\JsonResponse
      */
     protected function success($data, string $message = null, int $code = Response::HTTP_OK)
@@ -27,9 +27,9 @@ trait ApiResponse
     /**
      * Return an error JSON response.
      *
-     * @param array|string|null $data
-     * @param string            $message
-     * @param int               $code
+     * @param  array|string|null  $data
+     * @param  string  $message
+     * @param  int  $code
      * @return \Illuminate\Http\JsonResponse
      */
     protected function error($data = [], string $message = null, int $code)
@@ -45,8 +45,8 @@ trait ApiResponse
     /**
      * Return an error JSON response.
      *
-     * @param int               $code
-     * @param array|string|null $data
+     * @param  int  $code
+     * @param  array|string|null  $data
      * @return \Illuminate\Http\JsonResponse
      */
     protected function validationErrors($data = [], string $message = null, int $code = Response::HTTP_UNPROCESSABLE_ENTITY)
