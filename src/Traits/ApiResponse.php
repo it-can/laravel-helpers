@@ -49,12 +49,12 @@ trait ApiResponse
      * @param array|string|null $data
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function validationErrors($data = [], int $code = Response::HTTP_UNPROCESSABLE_ENTITY)
+    protected function validationErrors($data = [], string $message = null, int $code = Response::HTTP_UNPROCESSABLE_ENTITY)
     {
         return response()
             ->json([
                 'status'  => false,
-                'message' => 'Validation failed',
+                'message' => $message ?: 'Validation failed',
                 'data'    => $data,
             ], $code);
     }
