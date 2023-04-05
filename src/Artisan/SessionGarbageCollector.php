@@ -51,6 +51,6 @@ class SessionGarbageCollector extends Command
      */
     protected function getSessionLifetimeInSeconds()
     {
-        return (config('session.lifetime', null)) * 60;
+        return config('session.lifetime', null) * 60;
     }
 }

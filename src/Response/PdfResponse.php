@@ -6,10 +6,6 @@ use Illuminate\Http\Response;
 
 class PdfResponse extends Response
 {
-    /**
-     * @param $content
-     * @param $filename
-     */
     public function __construct($content, $filename)
     {
         $headers = [

@@ -1,16 +1,16 @@
 <?php
 
 use Carbon\Carbon;
-use Ramsey\Uuid\Uuid;
-use Utopia\Domains\Domain;
-use Illuminate\Support\Str;
+use Collective\Html\HtmlFacade as Html;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Collective\Html\HtmlFacade as Html;
-use League\CommonMark\CommonMarkConverter;
+use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
+use Ramsey\Uuid\Uuid;
+use Utopia\Domains\Domain;
 
 if (! function_exists('fatal')) {
     /**
@@ -133,7 +133,6 @@ if (! function_exists('getUserId')) {
     /**
      * Return user id.
      *
-     * @param  $guard
      * @return int|null
      */
     function getUserId($guard = null)
@@ -146,7 +145,6 @@ if (! function_exists('isLoggedIn')) {
     /**
      * Return if user is loggedin.
      *
-     * @param  $guard
      * @return bool
      */
     function isLoggedIn($guard = null)
@@ -159,7 +157,6 @@ if (! function_exists('convertPercent')) {
     /**
      * Convert percentage to calculateble float.
      *
-     * @param $percent
      * @return float
      */
     function convertPercent($percent)
@@ -383,7 +380,6 @@ if (! function_exists('selectArray')) {
     /**
      * Create select dropdown with optional first element.
      *
-     * @param  $array
      * @param  bool|string|array  $withNull
      * @return array
      */
@@ -411,15 +407,13 @@ if (! function_exists('nullOrValue')) {
      * Return null when string value when is empty
      * Optional, also return null when string value is 0.
      *
-     * @param $value
-     * @param $skipZero
      * @return null|string
      */
     function nullOrValue($value, $skipZero = true)
     {
         if (is_string($value)) {
             if ($value === '' || ($skipZero && $value === '0')) {
-                return null;
+                return;
             }
         }
 
@@ -549,7 +543,6 @@ if (! function_exists('isValidXML')) {
 
 if (! function_exists('callBackground')) {
     /**
-     * @param  $command
      * @param  null  $before
      * @param  null  $after
      * @return mixed
@@ -607,7 +600,6 @@ if (! function_exists('custom_range')) {
 
 if (! function_exists('cleanLicensePlate')) {
     /**
-     * @param $plate
      * @return string
      */
     function cleanLicensePlate($plate)
@@ -618,7 +610,6 @@ if (! function_exists('cleanLicensePlate')) {
 
 if (! function_exists('formatLicensePlate')) {
     /**
-     * @param $plate
      * @return string
      */
     function formatLicensePlate($plate)
@@ -677,7 +668,6 @@ if (! function_exists('validJson')) {
      * Check if string is valid JSON
      * Skips values like 123 etc.
      *
-     * @param $string
      * @return bool
      */
     function validJson($string)
@@ -703,7 +693,6 @@ if (! function_exists('compressHtmlPDF')) {
     /**
      * Remove spaces and other stuff for TCPDF because of indent issues.
      *
-     * @param $html
      * @return array|string
      */
     function compressHtmlPDF($html)
