@@ -37,7 +37,7 @@ trait ApiResponse
     }
 
     /**
-     * Return an error JSON response from validation
+     * Return an error JSON response from validation.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -52,7 +52,7 @@ trait ApiResponse
     }
 
     /**
-     * Return no content
+     * Return no content.
      *
      * @return \Illuminate\Http\JsonResponse
      */
