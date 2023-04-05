@@ -324,11 +324,11 @@ if (! function_exists('randomFilename')) {
     function randomFilename($path, $ext, $name = null, $timestamp = true)
     {
         $ext = Str::lower(str_replace('.', '', $ext));
-        $filename = ($name) ? Str::slug(Str::limit($name, 50), '_') : Str::random(30);
+        $filename = ($name) ? Str::slug(Str::limit($name, 50), '-') : Str::random(30);
         $filename = Str::lower($filename);
 
         if ($timestamp) {
-            $filename .= '_' . time();
+            $filename .= '-' . time();
         }
 
         // Loop until file does not exists
