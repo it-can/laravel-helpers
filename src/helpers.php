@@ -1,16 +1,16 @@
 <?php
 
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use ITCAN\LaravelHelpers\Artisan\Background;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment\Environment;
-use League\CommonMark\Extension\Table\TableExtension;
 use Ramsey\Uuid\Uuid;
 use Utopia\Domains\Domain;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Collective\Html\HtmlFacade as Html;
+use League\CommonMark\CommonMarkConverter;
+use ITCAN\LaravelHelpers\Artisan\Background;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Table\TableExtension;
 
 if (! function_exists('fatal')) {
     /**
