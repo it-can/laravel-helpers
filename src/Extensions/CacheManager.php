@@ -9,7 +9,6 @@ class CacheManager extends BaseCacheManager
     /**
      * Create an instance of the Redis cache driver.
      *
-     * @param  array  $config
      * @return \Illuminate\Cache\Repository
      */
     protected function createRedisDriver(array $config)

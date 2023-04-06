@@ -10,11 +10,12 @@ use Symfony\Component\Process\PhpExecutableFinder;
 class Background
 {
     private $command;
+
     private $before;
+
     private $after;
 
     /**
-     * @param  $command
      * @param  null  $before
      * @param  null  $after
      */
@@ -26,7 +27,6 @@ class Background
     }
 
     /**
-     * @param  $command
      * @param  null  $before
      * @param  null  $after
      * @return Background

@@ -1,10 +1,7 @@
 preset: laravel
 version: 8
-enabled:
-    - length_ordered_imports
 disabled:
     - concat_without_spaces
-    - alpha_ordered_imports
 finder:
     not-name:
         - index.php
