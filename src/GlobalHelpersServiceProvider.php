@@ -8,6 +8,8 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
@@ -92,5 +94,19 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 return $this->getQuery()->toRawSql();
             }
         );
+
+        Response::macro('streamDecryptedFile', function ($filePath, $fileName) {
+            return Response::streamDownload(function () use ($filePath) {
+                $fileStream = fopen($filePath, 'rb');
+
+                while (! feof($fileStream)) {
+                    $chunk = fread($fileStream, 1024);
+                    echo Crypt::decrypt($chunk);
+                    flush();
+                }
+
+                fclose($fileStream);
+            }, $fileName);
+        });
     }
 }
