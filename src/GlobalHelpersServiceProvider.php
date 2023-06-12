@@ -94,19 +94,5 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 return $this->getQuery()->toRawSql();
             }
         );
-
-        Response::macro('streamDecryptedFile', function ($filePath, $fileName, array $headers = [], $disposition = 'attachment') {
-            return Response::streamDownload(function () use ($filePath) {
-                $fileStream = fopen($filePath, 'rb');
-
-                while (! feof($fileStream)) {
-                    $chunk = fread($fileStream, 1024);
-                    echo Crypt::decrypt($chunk);
-                    flush();
-                }
-
-                fclose($fileStream);
-            }, $fileName, $headers, $disposition);
-        });
     }
 }
