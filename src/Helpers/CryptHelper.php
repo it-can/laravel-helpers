@@ -56,7 +56,7 @@ class CryptHelper
      */
     private static function fileEncrypter()
     {
-        return new FileEncrypter(config('app.key'), config('app.cipher'));
+        return new FileEncrypter(config('app.file_encrypt.key'), config('app.file_encrypt.cipher'));
     }
 
     /**
