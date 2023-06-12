@@ -65,7 +65,7 @@ class FileEncrypter
         }
 
         $this->key = $key;
-        $this->cipher = strtolower($this->cipher);
+        $this->cipher = strtolower($cipher);
     }
 
     /**
