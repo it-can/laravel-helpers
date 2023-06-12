@@ -95,7 +95,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             }
         );
 
-        Response::macro('streamDecryptedFile', function ($filePath, $fileName) {
+        Response::macro('streamDecryptedFile', function ($filePath, $fileName, array $headers = [], $disposition = 'attachment') {
             return Response::streamDownload(function () use ($filePath) {
                 $fileStream = fopen($filePath, 'rb');
 
@@ -106,7 +106,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 }
 
                 fclose($fileStream);
-            }, $fileName);
+            }, $fileName, $headers, $disposition);
         });
     }
 }
