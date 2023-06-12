@@ -24,9 +24,10 @@ class CryptHelper
     }
 
     /**
-     * @param $sourcePath
-     * @param $destPath
+     * @param  $sourcePath
+     * @param  $destPath
      * @return void
+     *
      * @throws \Exception
      */
     public static function decrypt($sourcePath, $destPath = null)
@@ -37,9 +38,10 @@ class CryptHelper
     }
 
     /**
-     * @param $sourcePath
-     * @param $destPath
+     * @param  $sourcePath
+     * @param  $destPath
      * @return void
+     *
      * @throws \Exception
      */
     public static function streamDecrypt($sourcePath)
@@ -62,6 +64,7 @@ class CryptHelper
      * @param  $finalFilePath
      * @param  $deleteBaseFile
      * @return mixed
+     *
      * @deprecated
      */
     public static function encryptLargeFile($baseFilePath, $finalFilePath, $deleteBaseFile = false)
