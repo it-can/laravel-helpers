@@ -11,22 +11,26 @@ class CryptHelper
      * @param  string  $sourcePath
      * @param  string  $destPath
      * @param  bool  $deleteSourceFile
-     * @return mixed
+     * @return bool
      */
     public static function encrypt($sourcePath, $destPath, $deleteSourceFile = false)
     {
         $encrypter = self::fileEncrypter();
 
+        $encrypted = $encrypter->encrypt($sourcePath, $destPath);
+
         // If encryption is successful, delete the source file
-        if ($encrypter->encrypt($sourcePath, $destPath) && $deleteSourceFile) {
+        if ($encrypted && $deleteSourceFile) {
             File::delete($sourcePath);
         }
+
+        return $encrypted;
     }
 
     /**
      * @param  $sourcePath
      * @param  $destPath
-     * @return void
+     * @return bool
      *
      * @throws \Exception
      */
@@ -34,21 +38,19 @@ class CryptHelper
     {
         $encrypter = self::fileEncrypter();
 
-        $encrypter->decrypt($sourcePath, $destPath);
+        return $encrypter->decrypt($sourcePath, $destPath);
     }
 
     /**
-     * @param  $sourcePath
-     * @param  $destPath
-     * @return void
-     *
+     * @param $sourcePath
+     * @return bool
      * @throws \Exception
      */
     public static function streamDecrypt($sourcePath)
     {
         $encrypter = self::fileEncrypter();
 
-        $encrypter->decrypt($sourcePath, 'php://output');
+        return $encrypter->decrypt($sourcePath, 'php://output');
     }
 
     /**
