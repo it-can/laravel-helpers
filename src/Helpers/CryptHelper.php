@@ -2,16 +2,67 @@
 
 namespace ITCAN\LaravelHelpers\Helpers;
 
-use Illuminate\Support\Facades\Crypt as CryptBase;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 
 class CryptHelper
 {
     /**
+     * @param  string  $sourcePath
+     * @param  string  $destPath
+     * @param  bool  $deleteSourceFile
+     * @return mixed
+     */
+    public static function encrypt($sourcePath, $destPath, $deleteSourceFile = false)
+    {
+        $encrypter = self::fileEncrypter();
+
+        // If encryption is successful, delete the source file
+        if ($encrypter->encrypt($sourcePath, $destPath) && $deleteSourceFile) {
+            File::delete($sourcePath);
+        }
+    }
+
+    /**
+     * @param $sourcePath
+     * @param $destPath
+     * @return void
+     * @throws \Exception
+     */
+    public static function decrypt($sourcePath, $destPath = null)
+    {
+        $encrypter = self::fileEncrypter();
+
+        $encrypter->decrypt($sourcePath, $destPath);
+    }
+
+    /**
+     * @param $sourcePath
+     * @param $destPath
+     * @return void
+     * @throws \Exception
+     */
+    public static function streamDecrypt($sourcePath)
+    {
+        $encrypter = self::fileEncrypter();
+
+        $encrypter->decrypt($sourcePath, 'php://output');
+    }
+
+    /**
+     * @return \ITCAN\LaravelHelpers\Helpers\FileEncrypter
+     */
+    private static function fileEncrypter()
+    {
+        return new FileEncrypter(config('app.key'), config('app.cipher'));
+    }
+
+    /**
      * @param  $baseFilePath
      * @param  $finalFilePath
      * @param  $deleteBaseFile
      * @return mixed
+     * @deprecated
      */
     public static function encryptLargeFile($baseFilePath, $finalFilePath, $deleteBaseFile = false)
     {
@@ -27,7 +78,7 @@ class CryptHelper
         while (! feof($fileHandle)) {
             $chunk = fread($fileHandle, $chunkSize);
 
-            File::append($finalFilePath, self::encrypt($chunk));
+            File::append($finalFilePath, Crypt::encrypt($chunk));
 
             unset($chunk);
         }
@@ -41,14 +92,5 @@ class CryptHelper
 
         // Return the filename of the encrypted file
         return $finalFilePath;
-    }
-
-    /**
-     * @param  $data
-     * @return string
-     */
-    private static function encrypt($data)
-    {
-        return CryptBase::encrypt($data);
     }
 }
