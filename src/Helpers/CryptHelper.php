@@ -42,8 +42,9 @@ class CryptHelper
     }
 
     /**
-     * @param $sourcePath
+     * @param  $sourcePath
      * @return bool
+     *
      * @throws \Exception
      */
     public static function streamDecrypt($sourcePath)
