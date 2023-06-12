@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\File;
 class CryptHelper
 {
     /**
-     * @param $baseFilePath
-     * @param $finalFilePath
-     * @param $deleteBaseFile
+     * @param  $baseFilePath
+     * @param  $finalFilePath
+     * @param  $deleteBaseFile
      * @return mixed
      */
     public static function encryptLargeFile($baseFilePath, $finalFilePath, $deleteBaseFile = false)
@@ -44,7 +44,7 @@ class CryptHelper
     }
 
     /**
-     * @param $data
+     * @param  $data
      * @return string
      */
     private static function encrypt($data)
