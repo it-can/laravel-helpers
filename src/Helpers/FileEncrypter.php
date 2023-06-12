@@ -138,7 +138,7 @@ class FileEncrypter
         $fileSize = filesize($sourcePath) - 16;
         $chunkSize = 16 * (self::FILE_ENCRYPTION_BLOCKS + 1);
 
-        $numberOfChunks = ceil(($fileSize) / $chunkSize);
+        $numberOfChunks = ceil($fileSize / $chunkSize);
 
         $i = 0;
         while (! feof($fpIn)) {
