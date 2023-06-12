@@ -29,6 +29,18 @@ class FileEncrypter
     protected $cipher;
 
     /**
+     * The supported cipher algorithms and their properties.
+     *
+     * @var array
+     */
+    private static $supportedCiphers = [
+        'aes-128-cbc' => ['size' => 16, 'aead' => false],
+        'aes-256-cbc' => ['size' => 32, 'aead' => false],
+        'aes-128-gcm' => ['size' => 16, 'aead' => true],
+        'aes-256-gcm' => ['size' => 32, 'aead' => true],
+    ];
+
+    /**
      * Create a new encrypter instance.
      *
      * @param  string  $key
@@ -37,21 +49,22 @@ class FileEncrypter
      *
      * @throws \RuntimeException
      */
-    public function __construct($key, $cipher = 'AES-128-CBC')
+    public function __construct($key, $cipher = 'aes-128-cbc')
     {
-        // If the key starts with "base64:", we will need to decode the key before handing
-        // it off to the encrypter. Keys may be base-64 encoded for presentation and we
-        // want to make sure to convert them back to the raw bytes before encrypting.
+        $key = (string) $key;
+
         if (Str::startsWith($key, 'base64:')) {
             $key = base64_decode(substr($key, 7));
         }
 
-        if (static::supported($key, $cipher)) {
-            $this->key = $key;
-            $this->cipher = $cipher;
-        } else {
-            throw new RuntimeException('The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths.');
+        if (! static::supported($key, $cipher)) {
+            $ciphers = implode(', ', array_keys(self::$supportedCiphers));
+
+            throw new RuntimeException("Unsupported cipher or incorrect key length. Supported ciphers are: {$ciphers}.");
         }
+
+        $this->key = $key;
+        $this->cipher = $cipher;
     }
 
     /**
@@ -63,10 +76,11 @@ class FileEncrypter
      */
     public static function supported($key, $cipher)
     {
-        $length = mb_strlen($key, '8bit');
+        if (! isset(self::$supportedCiphers[strtolower($cipher)])) {
+            return false;
+        }
 
-        return ($cipher === 'AES-128-CBC' && $length === 16) ||
-            ($cipher === 'AES-256-CBC' && $length === 32);
+        return mb_strlen($key, '8bit') === self::$supportedCiphers[strtolower($cipher)]['size'];
     }
 
     /**
@@ -82,7 +96,7 @@ class FileEncrypter
         $fpIn = $this->openSourceFile($sourcePath);
 
         // Put the initialzation vector to the beginning of the file
-        $iv = openssl_random_pseudo_bytes(16);
+        $iv = random_bytes(openssl_cipher_iv_length(strtolower($this->cipher)));
         fwrite($fpOut, $iv);
 
         $fileSize = filesize($sourcePath);
