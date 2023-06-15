@@ -8,8 +8,10 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use ITCAN\LaravelHelpers\Helpers\CryptHelper;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
@@ -97,5 +99,11 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 return $this->getQuery()->toRawSql();
             }
         );
+
+        Response::macro('streamDecryptedFile', function ($filePath, $fileName, array $headers = [], $disposition = 'attachment') {
+            return Response::streamDownload(function () use ($filePath) {
+                CryptHelper::streamDecrypt($filePath);
+            }, $fileName, $headers, $disposition);
+        });
     }
 }
