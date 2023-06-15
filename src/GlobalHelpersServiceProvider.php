@@ -8,6 +8,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
@@ -58,6 +59,10 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             $value = Arr::get($this, $key, $default);
 
             return is_iterable($value) ? collect($value) : $value;
+        });
+
+        Validator::extend('without_spaces', function ($attr, $value) {
+            return preg_match('/^\S*$/u', $value);
         });
 
         // Original idea by @therobfonz
