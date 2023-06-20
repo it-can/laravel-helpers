@@ -2,7 +2,6 @@
 
 namespace ITCAN\LaravelHelpers\Helpers;
 
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 
 class CryptHelper
