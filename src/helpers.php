@@ -122,7 +122,9 @@ if (! function_exists('convertFloat')) {
     {
         $value = $value ?? 0;
 
-        $val = str_replace(',', '.', $value);
+        // Remove all but numbers,dot,commas
+        $cleanValue = trim(preg_replace('/[^0-9.,]/', '', $value));
+        $val = str_replace(',', '.', $cleanValue);
         $val = preg_replace('/\.(?=.*\.)/', '', $val);
 
         return (float) $val;
