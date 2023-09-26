@@ -80,6 +80,18 @@ class HelperTest extends TestCase
         $expected = 1.20;
         $response = convertFloat('1,20');
         $this->assertEquals($expected, $response);
+
+        $expected = 1.20;
+        $response = convertFloat('€ 1,20');
+        $this->assertEquals($expected, $response);
+
+        $expected = 12000.30;
+        $response = convertFloat('€ 12.000,30');
+        $this->assertEquals($expected, $response);
+
+        $expected = 12000.30;
+        $response = convertFloat('€12.000,30');
+        $this->assertEquals($expected, $response);
     }
 
     /**
