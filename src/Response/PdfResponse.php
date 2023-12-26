@@ -9,7 +9,7 @@ class PdfResponse extends Response
     public function __construct($content, $filename, $extraHeaders = [])
     {
         $headers = [
-            'Content-Type'        => 'application/pdf',
+            'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ];
 

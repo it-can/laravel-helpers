@@ -288,11 +288,11 @@ if (! function_exists('getHost')) {
         }
 
         $info = [
-            'protocol'  => $parsedUrl['scheme'],
+            'protocol' => $parsedUrl['scheme'],
             'subdomain' => implode('.', $parts),
-            'domain'    => $host . '.' . $tld,
-            'host'      => $host,
-            'tld'       => $tld,
+            'domain' => $host . '.' . $tld,
+            'host' => $host,
+            'tld' => $tld,
         ];
 
         return ($subdomain && ! empty($info['subdomain']))

@@ -14,8 +14,8 @@ class NoCacheHeadersMiddleware
      * @var array
      */
     protected $headers = [
-        'pragma'        => 'no-cache',
-        'expires'       => 'Thu, 19 Nov 1981 08:52:00 GMT',
+        'pragma' => 'no-cache',
+        'expires' => 'Thu, 19 Nov 1981 08:52:00 GMT',
         'cache-control' => 'private, max-age=0, proxy-revalidate, no-cache, must-revalidate, no-store',
     ];
 
