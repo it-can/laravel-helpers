@@ -33,12 +33,24 @@ class HelperTest extends TestCase
         $response = convertFloat('1000,55');
         $this->assertEquals($expected, $response);
 
+        $expected = -1000.55;
+        $response = convertFloat('-1000,55');
+        $this->assertEquals($expected, $response);
+
         $expected = 1000.55;
         $response = convertFloat('1000.55');
         $this->assertEquals($expected, $response);
 
+        $expected = -1000.55;
+        $response = convertFloat('-1000.55');
+        $this->assertEquals($expected, $response);
+
         $expected = 1000.55;
         $response = convertFloat(1000.55);
+        $this->assertEquals($expected, $response);
+
+        $expected = -1000.55;
+        $response = convertFloat(-1000.55);
         $this->assertEquals($expected, $response);
 
         $expected = 1000;
@@ -75,6 +87,10 @@ class HelperTest extends TestCase
 
         $expected = 12000.30;
         $response = convertFloat('12,000.30');
+        $this->assertEquals($expected, $response);
+
+        $expected = -12000.30;
+        $response = convertFloat('-12,000.30');
         $this->assertEquals($expected, $response);
 
         $expected = 1.20;
