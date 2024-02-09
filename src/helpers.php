@@ -120,11 +120,7 @@ if (! function_exists('convertFloat')) {
      */
     function convertFloat($value)
     {
-        if (is_float($value)) {
-            return $value;
-        }
-
-        $value = $value ?? 0;
+        $value = (string) ($value ?? 0);
 
         // Remove all but numbers,dot,commas
         $cleanValue = trim(preg_replace('/[^0-9.,-]/', '', $value));
