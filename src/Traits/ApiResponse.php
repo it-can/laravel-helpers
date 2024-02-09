@@ -15,9 +15,9 @@ trait ApiResponse
     {
         return response()
             ->json([
-                'status'  => true,
+                'status' => true,
                 'message' => $message,
-                'data'    => $data,
+                'data' => $data,
             ], $code);
     }
 
@@ -30,9 +30,9 @@ trait ApiResponse
     {
         return response()
             ->json([
-                'status'  => false,
+                'status' => false,
                 'message' => $message,
-                'data'    => $data,
+                'data' => $data,
             ], $code);
     }
 
@@ -45,9 +45,9 @@ trait ApiResponse
     {
         return response()
             ->json([
-                'status'  => false,
+                'status' => false,
                 'message' => $message ?: 'Validation failed',
-                'errors'  => $errors,
+                'errors' => $errors,
             ], $code);
     }
 
