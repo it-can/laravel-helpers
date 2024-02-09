@@ -17,7 +17,7 @@ if (! function_exists('fatal')) {
      * Dump the passed variables and end the script.
      * This will pass it through to dd() function of Laravel.
      *
-     * @param mixed
+     * @param  mixed
      * @return void
      *
      * @deprecated
@@ -120,10 +120,14 @@ if (! function_exists('convertFloat')) {
      */
     function convertFloat($value)
     {
+        if (is_float($value)) {
+            return $value;
+        }
+
         $value = $value ?? 0;
 
         // Remove all but numbers,dot,commas
-        $cleanValue = trim(preg_replace('/[^0-9.,]/', '', $value));
+        $cleanValue = trim(preg_replace('/[^0-9.,-]/', '', $value));
         $val = str_replace(',', '.', $cleanValue);
         $val = preg_replace('/\.(?=.*\.)/', '', $val);
 
