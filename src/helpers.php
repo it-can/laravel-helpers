@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
+use LaravelLux\Html\HtmlFacade as Html;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
