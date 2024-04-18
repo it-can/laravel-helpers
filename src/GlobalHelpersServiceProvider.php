@@ -133,7 +133,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             }, $fileName ?? basename($filePath), $headers, $disposition);
         });
 
-        Response::macro('pdfStream', function ($filePath, $filename) {
+        Response::macro('pdfStream', function ($filePath, $fileName = null) {
             return new StreamedResponse(function () use ($filePath) {
                 $stream = fopen($filePath, 'rb');
 
@@ -149,7 +149,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 }
             }, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . $filename ?? basename($filePath) . '"',
+                'Content-Disposition' => 'inline; filename="' . $fileName ?? basename($filePath) . '"',
             ]);
         });
     }
