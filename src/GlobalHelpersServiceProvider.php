@@ -22,8 +22,8 @@ class GlobalHelpersServiceProvider extends ServiceProvider
     public function register()
     {
         Collection::make($this->strMacros())
-            ->reject(fn($class, $macro) => Str::hasMacro($macro) || method_exists(Str::class, $macro))
-            ->each(fn($class, $macro) => Str::macro($macro, app($class)()));
+            ->reject(fn ($class, $macro) => Str::hasMacro($macro) || method_exists(Str::class, $macro))
+            ->each(fn ($class, $macro) => Str::macro($macro, app($class)()));
     }
 
     /**
