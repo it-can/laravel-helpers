@@ -21,8 +21,8 @@ class GlobalHelpersServiceProvider extends ServiceProvider
     public function register()
     {
         Collection::make($this->strMacros())
-            ->reject(fn ($class, $macro) => Str::hasMacro($macro) || method_exists(Str::class, $macro))
-            ->each(fn ($class, $macro) => Str::macro($macro, app($class)()));
+            ->reject(fn($class, $macro) => Str::hasMacro($macro) || method_exists(Str::class, $macro))
+            ->each(fn($class, $macro) => Str::macro($macro, app($class)()));
     }
 
     /**
@@ -114,6 +114,20 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             return Response::streamDownload(function () use ($filePath) {
                 CryptHelper::streamDecrypt($filePath);
             }, $fileName, $headers, $disposition);
+        });
+
+        Response::macro('streamFileFromDisk', function ($disk, $filePath, $filename = null) {
+            return Response::streamDownload(function () use ($disk, $filePath) {
+                $stream = $disk->readStream($filePath);
+
+                if ($stream) {
+                    while (! feof($stream)) {
+                        echo fread($stream, 1024);
+                    }
+
+                    fclose($stream);
+                }
+            }, $filename ?? basename($filePath));
         });
     }
 
