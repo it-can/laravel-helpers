@@ -1,11 +1,11 @@
 <?php
 
 use Carbon\Carbon;
-use Collective\Html\HtmlFacade as Html;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Artisan\Background;
+use LaravelLux\Html\HtmlFacade as Html;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
@@ -120,11 +120,7 @@ if (! function_exists('convertFloat')) {
      */
     function convertFloat($value)
     {
-        if (is_float($value)) {
-            return $value;
-        }
-
-        $value = $value ?? 0;
+        $value = (string) ($value ?? 0);
 
         // Remove all but numbers,dot,commas
         $cleanValue = trim(preg_replace('/[^0-9.,-]/', '', $value));

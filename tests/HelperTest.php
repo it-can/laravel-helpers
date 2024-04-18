@@ -2,7 +2,7 @@
 
 namespace ITCAN\LaravelHelpers\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Str;
 
 class HelperTest extends TestCase
 {
@@ -700,35 +700,43 @@ class HelperTest extends TestCase
         $expected = 'www.google.nl';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
+        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
+            true);
         $expected = 'tweakers.net';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
+        $response = domainName('https://tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
+            true);
         $expected = 'tweakers.net';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
+        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
+            true);
         $expected = 'www.tweakers.net';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html', true);
+        $response = domainName('https://www.tweakers.net/nieuws/120361/google-geeft-alle-toekomstige-chromebooks-ondersteuning-voor-android-apps.html',
+            true);
         $expected = 'www.tweakers.net';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
+        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
+            true);
         $expected = 'tweakers.net';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
+        $response = domainName('https://tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
+            true);
         $expected = 'tweakers.net';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
+        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
+            true);
         $expected = 'www.tweakers.net';
         $this->assertEquals($expected, $response);
 
-        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ', true);
+        $response = domainName('https://www.tweakers.net/categorie/47/moederborden/producten/#filter:q1YqKMpMTvXNzFOyMtBRKi5ITXbLzClJLSpWsqpWMjY3AFFliTlKVtFKFkbGRkqxtbW1AA ',
+            true);
         $expected = 'www.tweakers.net';
         $this->assertEquals($expected, $response);
     }
@@ -954,5 +962,42 @@ class HelperTest extends TestCase
         $string = 'test@test.com   ,        test@test2.com';
         $expected = ['test@test.com', 'test@test2.com'];
         $this->assertEquals($expected, commaListToArray($string));
+    }
+
+    public function testParseDelimitedStringReturnsEmptyArrayForEmptyInput()
+    {
+        $result = Str::parseDelimitedString('');
+        $this->assertSame([], $result);
+    }
+
+    public function testParseDelimitedStringReturnsArrayForStringInput()
+    {
+        $result = Str::parseDelimitedString('apple, banana, cherry');
+        $this->assertSame(['apple', 'banana', 'cherry'], $result);
+    }
+
+    public function testParseDelimitedStringReturnsTrimmedArrayForStringInputWithSpaces()
+    {
+        $result = Str::parseDelimitedString('  apple ,  banana  , cherry ');
+        $this->assertSame(['apple', 'banana', 'cherry'], $result);
+    }
+
+    public function testParseDelimitedStringHandlesCustomSeparator()
+    {
+        $result = Str::parseDelimitedString('apple; banana; cherry', ';');
+        $this->assertSame(['apple', 'banana', 'cherry'], $result);
+    }
+
+    public function testParseDelimitedStringReturnsInputArrayAsIs()
+    {
+        $inputArray = ['apple', 'banana', 'cherry'];
+        $result = Str::parseDelimitedString($inputArray);
+        $this->assertSame($inputArray, $result);
+    }
+
+    public function testParseDelimitedStringFiltersEmptyStrings()
+    {
+        $result = Str::parseDelimitedString('apple,,banana, ,cherry,');
+        $this->assertSame(['apple', 'banana', 'cherry'], $result);
     }
 }

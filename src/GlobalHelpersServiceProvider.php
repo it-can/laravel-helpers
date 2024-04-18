@@ -11,10 +11,20 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Helpers\CryptHelper;
+use ITCAN\LaravelHelpers\Helpers\Macros\ParseDelimitedString;
+use ITCAN\LaravelHelpers\Helpers\Macros\Trim;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
+    public function register()
+    {
+        Collection::make($this->strMacros())
+            ->reject(fn ($class, $macro) => Str::hasMacro($macro) || method_exists(Str::class, $macro))
+            ->each(fn ($class, $macro) => Str::macro($macro, app($class)()));
+    }
+
     /**
      * Register Blade directives.
      *
@@ -105,5 +115,13 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 CryptHelper::streamDecrypt($filePath);
             }, $fileName, $headers, $disposition);
         });
+    }
+
+    private function strMacros()
+    {
+        return [
+            'trim' => Trim::class,
+            'parseDelimitedString' => ParseDelimitedString::class,
+        ];
     }
 }
