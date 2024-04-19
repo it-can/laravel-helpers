@@ -133,6 +133,22 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             }, $fileName ?? basename($filePath), $headers, $disposition);
         });
 
+        Response::macro('fileStream', function ($filePath, $fileName = null, array $headers = [], $disposition = 'attachment') {
+            return Response::streamDownload(function () use ($filePath) {
+                $stream = fopen($filePath, 'rb');
+
+                if ($stream) {
+                    while (! feof($stream)) {
+                        echo fread($stream, 8192);
+                    }
+
+                    if (is_resource($stream)) {
+                        fclose($stream);
+                    }
+                }
+            }, $fileName ?? basename($filePath), $headers, $disposition);
+        });
+
         Response::macro('pdfStream', function ($filePath, $fileName = null) {
             return new StreamedResponse(function () use ($filePath) {
                 $stream = fopen($filePath, 'rb');
