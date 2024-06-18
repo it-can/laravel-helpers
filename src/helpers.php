@@ -217,6 +217,18 @@ if (! function_exists('isProduction')) {
     }
 }
 
+if (! function_exists('isStaging')) {
+    /**
+     * Is current environment staging?
+     *
+     * @return bool
+     */
+    function isStaging()
+    {
+        return isEnv('staging');
+    }
+}
+
 if (! function_exists('isDevelopment')) {
     /**
      * Is current environment production?
