@@ -749,4 +749,3 @@ if (! function_exists('convertCents')) {
         return (int) round(convertFloat($value) * 100);
     }
 }
-
