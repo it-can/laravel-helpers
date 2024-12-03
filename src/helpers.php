@@ -742,3 +742,11 @@ if (! function_exists('commaListToArray')) {
         return array_filter(array_map('trim', explode(',', $text)));
     }
 }
+
+if (! function_exists('convertCents')) {
+    function convertCents($value): int
+    {
+        return (int) round(convertFloat($value) * 100);
+    }
+}
+
