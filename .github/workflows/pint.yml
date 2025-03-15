@@ -1,29 +1,23 @@
-name: PHP Linting (Pint)
-on:
-  workflow_dispatch:
-  push:
-    branches-ignore:
-      - 'dependabot/npm_and_yarn/*'
+name: Check & fix styling (laravel pint)
+on: [push, pull_request]
 jobs:
-  name: PHP Linting
-  on: pull_request
-  jobs:
-    phplint:
-      runs-on: ubuntu-latest
-      steps:
-          - uses: actions/checkout@v4
-          - name: "laravel-pint"
-            uses: aglipanci/laravel-pint-action@latest
-            with:
-              preset: laravel
+  phplint:
+    name: Laravel Pint
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 2
+        - name: Laravel Pint
+          uses: aglipanci/laravel-pint-action@latest
+          with:
+            preset: laravel
               verboseMode: true
               testMode: true
               configPath: "pint.json"
               pintVersion: 1.21.2
-              onlyDirty: true
-              onlyDiff: "master"
-          - name: Commit changes
-              uses: stefanzweifel/git-auto-commit-action@v4
-              with:
-                commit_message: PHP Linting (Pint)
-                skip_fetch: true
+        - name: Commit changes
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message: Fixing styling (Laravel Pint)
+            skip_fetch: true
