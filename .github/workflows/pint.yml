@@ -13,10 +13,10 @@ jobs:
           uses: aglipanci/laravel-pint-action@latest
           with:
             preset: laravel
-              verboseMode: true
-              testMode: true
-              configPath: "pint.json"
-              pintVersion: 1.21.2
+            verboseMode: true
+            testMode: true
+            configPath: "pint.json"
+            pintVersion: 1.21.2
 
         - name: Commit changes
           uses: stefanzweifel/git-auto-commit-action@v4
