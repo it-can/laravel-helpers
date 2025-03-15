@@ -27,8 +27,6 @@ class CryptHelper
     }
 
     /**
-     * @param  $sourcePath
-     * @param  $destPath
      * @return bool
      *
      * @throws \Exception
@@ -41,7 +39,6 @@ class CryptHelper
     }
 
     /**
-     * @param  $sourcePath
      * @return bool
      *
      * @throws \Exception

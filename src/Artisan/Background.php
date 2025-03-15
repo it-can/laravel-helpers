@@ -1,4 +1,5 @@
 <?php
+
 /**
  * https://github.com/dmitry-ivanov/laravel-helper-functions.
  */

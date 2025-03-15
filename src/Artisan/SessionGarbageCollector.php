@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) $year.
  * @author IT Can (Michiel Vugteveen) <info@it-can.nl>

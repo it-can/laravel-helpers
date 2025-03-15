@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
 
     public static $functions;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->createDummyprovider()->register();
 

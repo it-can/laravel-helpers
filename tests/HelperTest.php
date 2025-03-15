@@ -27,7 +27,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testConvertFloat()
+    public function test_convert_float()
     {
         $expected = 1000.55;
         $response = convertFloat('1000,55');
@@ -115,7 +115,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testCalculateTax()
+    public function test_calculate_tax()
     {
         $ex = false;
 
@@ -169,7 +169,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testConvertPercent()
+    public function test_convert_percent()
     {
         $response = convertPercent(21);
         $this->assertEquals(0.21, $response);
@@ -183,7 +183,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testGetHost()
+    public function test_get_host()
     {
         $response = getHost('www.google.nl', true);
         $expected = 'www.google.nl';
@@ -297,7 +297,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testRandomCode()
+    public function test_random_code()
     {
         $this->assertTrue($this->isValidUuid(randomCode()));
 
@@ -309,7 +309,7 @@ class HelperTest extends TestCase
     /**
      * Test randomFilename().
      */
-    public function testRandomFilename()
+    public function test_random_filename()
     {
         $response = randomFilename('.', 'jpg');
         $this->assertEquals(45, strlen($response));
@@ -333,7 +333,7 @@ class HelperTest extends TestCase
     /**
      * Test ibanMachine().
      */
-    public function testIbanMachine()
+    public function test_iban_machine()
     {
         $response = ibanMachine('NL68ABNA0484748203');
         $this->assertEquals($response, 'NL68ABNA0484748203');
@@ -348,7 +348,7 @@ class HelperTest extends TestCase
     /**
      * Test ibanMachine().
      */
-    public function testIbanHuman()
+    public function test_iban_human()
     {
         $response = ibanHuman('NL68ABNA0484748203');
         $this->assertEquals($response, 'NL68 ABNA 0484 7482 03');
@@ -363,13 +363,13 @@ class HelperTest extends TestCase
     /**
      * Test now() and carbon().
      */
-    public function testNow()
+    public function test_now()
     {
         $response = carbon();
         $this->assertInstanceOf(\Carbon\Carbon::class, $response);
     }
 
-    public function testSelectArray()
+    public function test_select_array()
     {
         $response = selectArray([1 => 'test']);
         $this->assertEquals($response, [1 => 'test']);
@@ -387,7 +387,7 @@ class HelperTest extends TestCase
         $this->assertEquals($response, [0 => '-- choose --', 1 => 'testje', 2 => 'testtest']);
     }
 
-    public function testNullOrValue()
+    public function test_null_or_value()
     {
         $this->assertEquals(nullOrValue('test'), 'test');
         $this->assertEquals(nullOrValue(123), 123);
@@ -469,7 +469,7 @@ class HelperTest extends TestCase
         $this->assertTrue(validEmail('user.name-long@example.com'));
     }
 
-    public function test_sanitizeFilename()
+    public function test_sanitize_filename()
     {
         $response = sanitizeFilename('./<!--foo-->', '');
         $this->assertEquals('foo', $response);
@@ -486,12 +486,12 @@ class HelperTest extends TestCase
 
     protected function getHtmlFileLocation($name)
     {
-        return __DIR__ . '/HTML/' . $name;
+        return __DIR__.'/HTML/'.$name;
     }
 
     protected function getXmlFileLocation($name)
     {
-        return __DIR__ . '/XML/' . $name;
+        return __DIR__.'/XML/'.$name;
     }
 
     protected function getXmlFileContent($name)
@@ -513,7 +513,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testIsValidXML()
+    public function test_is_valid_xml()
     {
         $this->assertFalse(isValidXML('NL 82 RABO 0111111111'));
 
@@ -545,7 +545,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testCheckParseXML()
+    public function test_check_parse_xml()
     {
         $response = $this->parseXML($this->getXmlFileContent('string.xml'));
         $this->assertInstanceOf('SimpleXMLElement', $response);
@@ -559,7 +559,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testDomainName()
+    public function test_domain_name()
     {
         $response = domainName('www.bier.google.nl');
         $expected = 'google.nl';
@@ -646,7 +646,7 @@ class HelperTest extends TestCase
         $this->assertEquals($expected, $response);
     }
 
-    public function testDomainNameWithSubdomain()
+    public function test_domain_name_with_subdomain()
     {
         $response = domainName('www.bier.google.nl', true);
         $expected = 'www.bier.google.nl';
@@ -746,7 +746,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testMarkdownHelper()
+    public function test_markdown_helper()
     {
         $markdownText = '# Hello World!';
         $expected = "<h1>Hello World!</h1>\n";
@@ -762,7 +762,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testCustomRangeHelper()
+    public function test_custom_range_helper()
     {
         $this->assertCount(11, custom_range(0, 10, 1));
 
@@ -774,7 +774,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testCleanPlate()
+    public function test_clean_plate()
     {
         $plate = '10-KFH-4';
         $expected = '10KFH4';
@@ -792,11 +792,11 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testFormatPlate()
+    public function test_format_plate()
     {
-        /**********/
+        //
         // PLATE 1
-        /**********/
+        //
         $plate = 'SK-506-L';
         $expected = 'SK-506-L';
 
@@ -808,9 +808,9 @@ class HelperTest extends TestCase
         $plate = 'SK506L';
         $this->assertEquals($expected, formatLicensePlate($plate));
 
-        /**********/
+        //
         // PLATE 2
-        /**********/
+        //
         $plate = 'RX-NL-63';
         $expected = 'RX-NL-63';
 
@@ -822,9 +822,9 @@ class HelperTest extends TestCase
         $plate = 'RXNL63';
         $this->assertEquals($expected, formatLicensePlate($plate));
 
-        /**********/
+        //
         // PLATE 3
-        /**********/
+        //
         $plate = '06-LHS-9';
         $expected = '06-LHS-9';
 
@@ -836,17 +836,17 @@ class HelperTest extends TestCase
         $plate = '06LHS9';
         $this->assertEquals($expected, formatLicensePlate($plate));
 
-        /**********/
+        //
         // PLATE 4
-        /**********/
+        //
         $plate = '22CD25';
         $expected = '22-CD-25';
 
         $this->assertEquals($expected, formatLicensePlate($plate));
 
-        /**********/
+        //
         // PLATE 5
-        /**********/
+        //
         $plate = 'CDJ355';
         $expected = 'CDJ355';
 
@@ -858,7 +858,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testValidJsonHelper()
+    public function test_valid_json_helper()
     {
         $this->assertFalse(validJson('dfdsafadsadfsfasdfadsfdsa'));
 
@@ -919,7 +919,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testCompressHtmlPDF()
+    public function test_compress_html_pdf()
     {
         $html = file_get_contents($this->getHtmlFileLocation('org.html'));
         $expected = file_get_contents($this->getHtmlFileLocation('compressed.html'));
@@ -937,7 +937,7 @@ class HelperTest extends TestCase
      *
      * @return void
      */
-    public function testCommaListToArray()
+    public function test_comma_list_to_array()
     {
         $string = 'test@test.com';
         $expected = ['test@test.com'];
@@ -964,38 +964,38 @@ class HelperTest extends TestCase
         $this->assertEquals($expected, commaListToArray($string));
     }
 
-    public function testParseDelimitedStringReturnsEmptyArrayForEmptyInput()
+    public function test_parse_delimited_string_returns_empty_array_for_empty_input()
     {
         $result = Str::parseDelimitedString('');
         $this->assertSame([], $result);
     }
 
-    public function testParseDelimitedStringReturnsArrayForStringInput()
+    public function test_parse_delimited_string_returns_array_for_string_input()
     {
         $result = Str::parseDelimitedString('apple, banana, cherry');
         $this->assertSame(['apple', 'banana', 'cherry'], $result);
     }
 
-    public function testParseDelimitedStringReturnsTrimmedArrayForStringInputWithSpaces()
+    public function test_parse_delimited_string_returns_trimmed_array_for_string_input_with_spaces()
     {
         $result = Str::parseDelimitedString('  apple ,  banana  , cherry ');
         $this->assertSame(['apple', 'banana', 'cherry'], $result);
     }
 
-    public function testParseDelimitedStringHandlesCustomSeparator()
+    public function test_parse_delimited_string_handles_custom_separator()
     {
         $result = Str::parseDelimitedString('apple; banana; cherry', ';');
         $this->assertSame(['apple', 'banana', 'cherry'], $result);
     }
 
-    public function testParseDelimitedStringReturnsInputArrayAsIs()
+    public function test_parse_delimited_string_returns_input_array_as_is()
     {
         $inputArray = ['apple', 'banana', 'cherry'];
         $result = Str::parseDelimitedString($inputArray);
         $this->assertSame($inputArray, $result);
     }
 
-    public function testParseDelimitedStringFiltersEmptyStrings()
+    public function test_parse_delimited_string_filters_empty_strings()
     {
         $result = Str::parseDelimitedString('apple,,banana, ,cherry,');
         $this->assertSame(['apple', 'banana', 'cherry'], $result);

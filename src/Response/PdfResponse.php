@@ -10,7 +10,7 @@ class PdfResponse extends Response
     {
         $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            'Content-Disposition' => 'inline; filename="'.$filename.'"',
         ];
 
         if (is_array($extraHeaders)) {

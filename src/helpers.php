@@ -39,7 +39,7 @@ if (! function_exists('cdnUrl')) {
     {
         $cdn = (config('settings.cdn')) ?: config('app.url', '/');
 
-        return rtrim($cdn, '/') . '/' . ltrim($path, '/');
+        return rtrim($cdn, '/').'/'.ltrim($path, '/');
     }
 }
 
@@ -78,7 +78,7 @@ if (! function_exists('uploadUrl')) {
      */
     function uploadUrl($url)
     {
-        return cdnUrl('uploads/' . ltrim($url, '/'));
+        return cdnUrl('uploads/'.ltrim($url, '/'));
     }
 }
 
@@ -91,7 +91,7 @@ if (! function_exists('imgUrl')) {
      */
     function imgUrl($url)
     {
-        return cdnUrl('img/' . ltrim($url, '/'));
+        return cdnUrl('img/'.ltrim($url, '/'));
     }
 }
 
@@ -286,7 +286,7 @@ if (! function_exists('getHost')) {
         $url = trim($url);
 
         if (stripos($url, '://') === false && substr($url, 0, 1) != '/') {
-            $url = 'http://' . $url;
+            $url = 'http://'.$url;
         }
 
         $parsedUrl = parse_url($url);
@@ -295,20 +295,20 @@ if (! function_exists('getHost')) {
         $host = array_pop($parts);
 
         if (strlen($tld) === 2 && strlen($host) <= 3) {
-            $tld = $host . '.' . $tld;
+            $tld = $host.'.'.$tld;
             $host = array_pop($parts);
         }
 
         $info = [
             'protocol' => $parsedUrl['scheme'],
             'subdomain' => implode('.', $parts),
-            'domain' => $host . '.' . $tld,
+            'domain' => $host.'.'.$tld,
             'host' => $host,
             'tld' => $tld,
         ];
 
         return ($subdomain && ! empty($info['subdomain']))
-            ? $info['subdomain'] . '.' . $info['domain']
+            ? $info['subdomain'].'.'.$info['domain']
             : $info['domain'];
     }
 }
@@ -342,11 +342,11 @@ if (! function_exists('randomFilename')) {
         $filename = Str::lower($filename);
 
         if ($timestamp) {
-            $filename .= '-' . time();
+            $filename .= '-'.time();
         }
 
         // Loop until file does not exists
-        while (file_exists($path . '/' . $filename . '.' . $ext)) {
+        while (file_exists($path.'/'.$filename.'.'.$ext)) {
             $filename .= rand(0, 99999);
         }
 
@@ -578,7 +578,7 @@ if (! function_exists('domainName')) {
      */
     function domainName($url, $withSubdomain = false)
     {
-        $url = 'http://' . str_replace(['http://', 'https://'], '', $url);
+        $url = 'http://'.str_replace(['http://', 'https://'], '', $url);
         $host = parse_url($url, PHP_URL_HOST);
 
         $domain = new Domain($host);
@@ -646,9 +646,9 @@ if (! function_exists('formatLicensePlate')) {
             '/^(\d{3})([A-Z]{2})(\d{1})$/',       // 14    999-XX-9    (since 2019)
 
             // likely upcoming plate patterns
-            //'^(\d{3})(\d{2})([A-Z]{1})$/',       //       999-99-X
-            //'^([A-Z]{3})(\d{2})(\d{1})$/',       //       XXX-99-9
-            //'^([A-Z]{3})([A-Z]{2})(\d{1})$/',    //       XXX-XX-9
+            // '^(\d{3})(\d{2})([A-Z]{1})$/',       //       999-99-X
+            // '^([A-Z]{3})(\d{2})(\d{1})$/',       //       XXX-99-9
+            // '^([A-Z]{3})([A-Z]{2})(\d{1})$/',    //       XXX-XX-9
         ];
 
         $diplomateLicencePlateRegex = '/^CD[ABFJNST]\d{1,3}$/';
@@ -716,10 +716,10 @@ if (! function_exists('compressHtmlPDF')) {
 
         // remove ws around block/undisplayed elements
         $html = preg_replace('/\\s+(<\\/?(?:area|article|aside|base(?:font)?|blockquote|body'
-            . '|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
-            . '|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
-            . '|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h|r|foot|itle)'
-            . '|ul|video)\\b[^>]*>)/iu', '$1', $html);
+            .'|canvas|caption|center|col(?:group)?|dd|dir|div|dl|dt|fieldset|figcaption|figure|footer|form'
+            .'|frame(?:set)?|h[1-6]|head|header|hgroup|hr|html|legend|li|link|main|map|menu|meta|nav'
+            .'|ol|opt(?:group|ion)|output|p|param|section|t(?:able|body|head|d|h|r|foot|itle)'
+            .'|ul|video)\\b[^>]*>)/iu', '$1', $html);
 
         // remove ws outside of all elements
         $html = preg_replace(

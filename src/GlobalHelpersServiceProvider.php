@@ -94,7 +94,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
 
                         return preg_replace(
                             '/\?/',
-                            is_string($binding) ? "'" . $binding . "'" : $binding,
+                            is_string($binding) ? "'".$binding."'" : $binding,
                             $sql,
                             1
                         );
@@ -165,7 +165,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 }
             }, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . $fileName ?? basename($filePath) . '"',
+                'Content-Disposition' => 'inline; filename="'.$fileName ?? basename($filePath).'"',
             ]);
         });
     }

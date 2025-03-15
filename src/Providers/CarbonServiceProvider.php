@@ -48,7 +48,7 @@ class CarbonServiceProvider extends ServiceProvider
 
         // Loop through each method and define a macro
         foreach ($methods as $method) {
-            $macro = 'int' . ucfirst($method);
+            $macro = 'int'.ucfirst($method);
 
             Carbon::macro($macro, function (...$args) use ($method) {
                 return (int) abs(call_user_func_array([$this, $method], $args));

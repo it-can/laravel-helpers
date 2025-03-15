@@ -24,7 +24,7 @@
         "laravellux/html": "^7.1",
         "mockery/mockery": "^1.0",
         "nesbot/carbon": "^1.26.3 || ^2.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^11.5.3",
         "ramsey/uuid": "^3.9|^4.0"
     },
     "autoload": {
