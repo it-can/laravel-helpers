@@ -13,8 +13,6 @@ jobs:
           uses: aglipanci/laravel-pint-action@latest
           with:
             preset: laravel
-            verboseMode: true
-            testMode: true
             configPath: "pint.json"
             pintVersion: 1.21.2
 
