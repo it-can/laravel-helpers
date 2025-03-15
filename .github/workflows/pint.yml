@@ -1,5 +1,12 @@
-name: Check & fix styling (laravel pint)
-on: [ push, pull_request ]
+name: Check & Fix Styling (Laravel Pint)
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: write
+
 jobs:
   phplint:
     name: Laravel Pint
@@ -7,16 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 2  # Fetch minimal history for PR checks
 
-      - name: Laravel Pint
-        uses: aglipanci/laravel-pint-action@latest
+      - name: Run Laravel Pint
+        uses: aglipanci/laravel-pint-action@v2
         with:
           preset: laravel
           configPath: "pint.json"
           pintVersion: 1.21.2
 
-      - name: Commit changes
+      - name: Auto Commit Fixes
+        if: github.event_name == 'push'  # Only commit fixes on push, not PRs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Fixing styling (Laravel Pint)
