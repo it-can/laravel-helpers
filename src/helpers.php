@@ -199,7 +199,7 @@ if (! function_exists('isEnv')) {
      * @param  string  $env
      * @return bool
      */
-    function isEnv($env)
+    function isEnv(string $env): bool
     {
         return app()->environment($env);
     }
@@ -211,9 +211,9 @@ if (! function_exists('isProduction')) {
      *
      * @return bool
      */
-    function isProduction()
+    function isProduction(): bool
     {
-        return isEnv('production');
+        return app()->isProduction();
     }
 }
 
@@ -223,19 +223,31 @@ if (! function_exists('isStaging')) {
      *
      * @return bool
      */
-    function isStaging()
+    function isStaging(): bool
     {
         return isEnv('staging');
     }
 }
 
-if (! function_exists('isDevelopment')) {
+if (! function_exists('isLocal')) {
     /**
-     * Is current environment production?
+     * Is current environment local?
      *
      * @return bool
      */
-    function isDevelopment()
+    function isLocal(): bool
+    {
+        return app()->isLocal();
+    }
+}
+
+if (! function_exists('isDevelopment')) {
+    /**
+     * Is current environment not production?
+     *
+     * @return bool
+     */
+    function isDevelopment(): bool
     {
         return ! isProduction();
     }
