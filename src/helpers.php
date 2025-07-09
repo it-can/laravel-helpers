@@ -719,9 +719,9 @@ if (! function_exists('compressHtmlPDF')) {
     /**
      * Remove spaces and other stuff for TCPDF because of indent issues.
      *
-     * @return array|string
+     * @return string
      */
-    function compressHtmlPDF($html)
+    function compressHtmlPDF(string $html): string
     {
         // trim each line.
         $html = preg_replace('/^\\s+|\\s+$/mu', '', $html);
