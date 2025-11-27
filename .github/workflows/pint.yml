@@ -12,7 +12,7 @@ jobs:
     name: Laravel Pint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2  # Fetch minimal history for PR checks
 
@@ -20,11 +20,11 @@ jobs:
         uses: aglipanci/laravel-pint-action@v2
         with:
           configPath: "pint.json"
-          pintVersion: 1.21.2
+          pintVersion: 1.26.0
 
       - name: Auto Commit Fixes
         if: github.event_name == 'push'  # Only commit fixes on push, not PRs
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Fixing styling (Laravel Pint)
           skip_fetch: true
