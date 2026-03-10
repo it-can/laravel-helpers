@@ -10,7 +10,6 @@ use LaravelLux\Html\HtmlFacade as Html;
 use League\CommonMark\CommonMarkConverter;
 use ITCAN\LaravelHelpers\Artisan\Background;
 use League\CommonMark\Environment\Environment;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use League\CommonMark\Extension\Table\TableExtension;
 
 if (! function_exists('fatal')) {
