@@ -129,10 +129,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 StreamHelper::fromPath($filePath);
             }, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => HeaderUtils::makeDisposition(
-                    ResponseHeaderBag::DISPOSITION_INLINE,
-                    $downloadName
-                ),
+                'Content-Disposition' => HeaderUtils::makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $downloadName),
             ]);
         });
 

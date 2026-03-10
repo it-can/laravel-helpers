@@ -3,6 +3,9 @@
 namespace ITCAN\LaravelHelpers\Response;
 
 use Illuminate\Http\Response;
+use ITCAN\LaravelHelpers\Helpers\StreamHelper;
+use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class PdfResponse extends Response
 {
@@ -10,7 +13,7 @@ class PdfResponse extends Response
     {
         $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => sprintf('inline; filename="%s"', $filename),
+            'Content-Disposition' => HeaderUtils::makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, StreamHelper::sanitizeDownloadName($filename)),
         ];
 
         if (is_array($extraHeaders)) {
