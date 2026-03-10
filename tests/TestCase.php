@@ -2,11 +2,11 @@
 
 namespace ITCAN\LaravelHelpers\Tests;
 
-use ITCAN\LaravelHelpers\GlobalHelpersServiceProvider;
 use Mockery;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use PHPUnit\Framework\TestCase as BaseTestCase;
 use ReflectionClass;
+use PHPUnit\Framework\TestCase as BaseTestCase;
+use ITCAN\LaravelHelpers\GlobalHelpersServiceProvider;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 Mockery::globalHelpers();
 

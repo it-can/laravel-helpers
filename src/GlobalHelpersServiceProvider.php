@@ -3,19 +3,23 @@
 namespace ITCAN\LaravelHelpers;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use ITCAN\LaravelHelpers\Helpers\CryptHelper;
-use ITCAN\LaravelHelpers\Helpers\Macros\ParseDelimitedString;
 use ITCAN\LaravelHelpers\Helpers\Macros\Trim;
+use ITCAN\LaravelHelpers\Helpers\StreamHelper;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\HeaderUtils;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use ITCAN\LaravelHelpers\Helpers\Macros\ParseDelimitedString;
 
 class GlobalHelpersServiceProvider extends ServiceProvider
 {
@@ -94,7 +98,7 @@ class GlobalHelpersServiceProvider extends ServiceProvider
 
                         return preg_replace(
                             '/\?/',
-                            is_string($binding) ? "'".$binding."'" : $binding,
+                            is_string($binding) ? "'" . $binding . "'" : $binding,
                             $sql,
                             1
                         );
@@ -111,66 +115,55 @@ class GlobalHelpersServiceProvider extends ServiceProvider
             }
         );
 
-        Response::macro('streamDecryptedFile', function ($filePath, $filename, array $headers = [], $disposition = 'attachment') {
+        Response::macro('streamDecryptedFile', function (string $filePath, string $filename, array $headers = [], string $disposition = 'attachment'): StreamedResponse {
             return Response::streamDownload(function () use ($filePath) {
                 CryptHelper::streamDecrypt($filePath);
             }, $filename, $headers, $disposition);
         });
 
-        Response::macro('streamFileFromDisk', function ($disk, $filePath, $fileName = null, array $headers = [], $disposition = 'attachment') {
-            return Response::streamDownload(function () use ($disk, $filePath) {
-                $stream = $disk->readStream($filePath);
+        Response::macro('pdfStream', function (string $filePath, ?string $fileName = null): StreamedResponse {
+            $downloadName = $fileName ?? basename($filePath);
+            $downloadName = StreamHelper::sanitizeDownloadName($downloadName);
 
-                if ($stream) {
-                    while (! feof($stream)) {
-                        echo fread($stream, 8192);
-                    }
-
-                    if (is_resource($stream)) {
-                        fclose($stream);
-                    }
-                }
-            }, $fileName ?? basename($filePath), $headers, $disposition);
-        });
-
-        Response::macro('fileStream', function ($filePath, $fileName = null, array $headers = [], $disposition = 'attachment') {
-            return Response::streamDownload(function () use ($filePath) {
-                $stream = fopen($filePath, 'rb');
-
-                if ($stream) {
-                    while (! feof($stream)) {
-                        echo fread($stream, 8192);
-                    }
-
-                    if (is_resource($stream)) {
-                        fclose($stream);
-                    }
-                }
-            }, $fileName ?? basename($filePath), $headers, $disposition);
-        });
-
-        Response::macro('pdfStream', function ($filePath, $fileName = null) {
-            return new StreamedResponse(function () use ($filePath) {
-                $stream = fopen($filePath, 'rb');
-
-                if ($stream) {
-                    while (! feof($stream)) {
-                        echo fread($stream, 8192);
-                        flush();
-                    }
-
-                    if (is_resource($stream)) {
-                        fclose($stream);
-                    }
-                }
+            return new StreamedResponse(function () use ($filePath): void {
+                StreamHelper::fromPath($filePath);
             }, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="'.$fileName ?? basename($filePath).'"',
+                'Content-Disposition' => HeaderUtils::makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $downloadName),
             ]);
+        });
+
+        Response::macro('fileStream', function (
+            string $filePath,
+            ?string $fileName = null,
+            array $headers = [],
+            string $disposition = 'attachment'
+        ): StreamedResponse {
+            $downloadName = $fileName ?? basename($filePath);
+            $downloadName = StreamHelper::sanitizeDownloadName($downloadName);
+
+            return Response::streamDownload(function () use ($filePath): void {
+                StreamHelper::fromPath($filePath);
+            }, $downloadName, $headers, $disposition);
+        });
+
+        Response::macro('streamFileFromDisk', function (
+            string|Filesystem $disk,
+            string $filePath,
+            ?string $fileName = null,
+            array $headers = [],
+            string $disposition = 'attachment'
+        ): StreamedResponse {
+            $downloadName = $fileName ?? basename($filePath);
+            $downloadName = StreamHelper::sanitizeDownloadName($downloadName);
+
+            return Response::streamDownload(function () use ($disk, $filePath): void {
+                StreamHelper::fromDisk($disk, $filePath);
+            }, $downloadName, $headers, $disposition);
         });
     }
 
-    private function strMacros()
+    protected function strMacros(): array
     {
         return [
             'trim' => Trim::class,
