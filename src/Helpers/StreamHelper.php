@@ -10,34 +10,18 @@ final class StreamHelper
 {
     public static function fromPath(string $filePath): void
     {
-        $stream = fopen($filePath, 'rb');
-
-        if ($stream === false) {
-            throw new RuntimeException(sprintf('Could not open file for reading: %s', $filePath));
-        }
-
-        self::streamToOutput($stream);
+        self::streamToOutput(self::openPathStream($filePath));
     }
 
     public static function fromDisk(string|Filesystem $disk, string $filePath): void
     {
-        if (is_string($disk)) {
-            $disk = Storage::disk($disk);
-        }
+        $filesystem = is_string($disk) ? Storage::disk($disk) : $disk;
 
-        $stream = $disk->readStream($filePath);
-
-        if ($stream === false) {
-            $diskName = self::resolveDiskName($disk);
-
-            throw new RuntimeException(sprintf('Could not open disk (%s) file for reading: %s', $diskName, $filePath));
-        }
-
-        self::streamToOutput($stream);
+        self::streamToOutput(self::openDiskStream($filesystem, $filePath));
     }
 
     /**
-     * @param  resource|false  $stream
+     * @param  resource  $stream
      */
     public static function streamToOutput($stream): void
     {
@@ -45,26 +29,31 @@ final class StreamHelper
             throw new RuntimeException('Stream is not a valid resource.');
         }
 
+        $output = fopen('php://output', 'wb');
+
+        if ($output === false) {
+            fclose($stream);
+
+            throw new RuntimeException('Could not open output stream for writing.');
+        }
+
         try {
-            $output = fopen('php://output', 'wb');
-
-            if (! is_resource($output)) {
-                return;
-            }
-
-            try {
-                stream_copy_to_stream($stream, $output);
-            } finally {
-                fclose($output);
+            if (stream_copy_to_stream($stream, $output) === false) {
+                throw new RuntimeException('Failed to copy stream to output.');
             }
         } finally {
+            fclose($output);
             fclose($stream);
         }
     }
 
     public static function sanitizeDownloadName(string $fileName): string
     {
-        return str_replace(['"', "\r", "\n"], '', $fileName);
+        $fileName = trim($fileName);
+        $fileName = preg_replace('/[[:cntrl:]]+/', '', $fileName);
+        $fileName = str_replace(['/', '\\'], '-', $fileName);
+
+        return $fileName !== '' ? $fileName : 'download';
     }
 
     public static function resolveDiskName(string|Filesystem $disk): string
@@ -84,5 +73,39 @@ final class StreamHelper
         }
 
         return $config['disk_name'] ?? 'unknown';
+    }
+
+    /**
+     * @return resource
+     */
+    protected static function openPathStream(string $filePath)
+    {
+        $stream = fopen($filePath, 'rb');
+
+        if ($stream === false) {
+            throw new RuntimeException(sprintf('Could not open file for reading: %s', $filePath));
+        }
+
+        return $stream;
+    }
+
+    /**
+     * @return resource
+     */
+    protected static function openDiskStream(Filesystem $disk, string $filePath)
+    {
+        $stream = $disk->readStream($filePath);
+
+        if ($stream === false) {
+            $diskName = self::resolveDiskName($disk);
+
+            throw new RuntimeException(sprintf(
+                'Could not open disk (%s) file for reading: %s',
+                $diskName,
+                $filePath
+            ));
+        }
+
+        return $stream;
     }
 }

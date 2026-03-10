@@ -14,8 +14,10 @@ use ITCAN\LaravelHelpers\Helpers\CryptHelper;
 use ITCAN\LaravelHelpers\Helpers\Macros\Trim;
 use ITCAN\LaravelHelpers\Helpers\StreamHelper;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use ITCAN\LaravelHelpers\Helpers\Macros\ParseDelimitedString;
 
@@ -127,7 +129,10 @@ class GlobalHelpersServiceProvider extends ServiceProvider
                 StreamHelper::fromPath($filePath);
             }, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => sprintf('inline; filename="%s"', $downloadName),
+                'Content-Disposition' => HeaderUtils::makeDisposition(
+                    ResponseHeaderBag::DISPOSITION_INLINE,
+                    $downloadName
+                ),
             ]);
         });
 
