@@ -51,7 +51,7 @@ final class StreamHelper
     {
         $fileName = trim($fileName);
         $fileName = preg_replace('/[[:cntrl:]]+/', '', $fileName);
-        $fileName = str_replace(['/', '\\'], '-', $fileName);
+        $fileName = str_replace(['"', '/', '\\'], '-', $fileName);
 
         return $fileName !== '' ? $fileName : 'download';
     }
