@@ -40,7 +40,7 @@ class StreamHelper
     public static function streamToOutput($stream): void
     {
         if (! is_resource($stream)) {
-            return;
+            throw new RuntimeException('Stream is not a valid resource.');
         }
 
         try {
