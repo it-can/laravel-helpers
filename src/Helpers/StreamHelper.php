@@ -6,7 +6,7 @@ use RuntimeException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\Filesystem;
 
-class StreamHelper
+final class StreamHelper
 {
     public static function fromPath(string $filePath): void
     {
