@@ -10,20 +10,20 @@ final class StreamHelper
 {
     public static function fromPath(string $filePath): void
     {
-        self::streamToOutput(self::openPathStream($filePath));
+        self::copyStreamToOutput(self::openPathStream($filePath));
     }
 
     public static function fromDisk(string|Filesystem $disk, string $filePath): void
     {
         $filesystem = is_string($disk) ? Storage::disk($disk) : $disk;
 
-        self::streamToOutput(self::openDiskStream($filesystem, $filePath));
+        self::copyStreamToOutput(self::openDiskStream($filesystem, $filePath));
     }
 
     /**
      * @param  resource  $stream
      */
-    public static function streamToOutput($stream): void
+    public static function copyStreamToOutput($stream): void
     {
         if (! is_resource($stream)) {
             throw new RuntimeException('Stream is not a valid resource.');
@@ -78,8 +78,12 @@ final class StreamHelper
     /**
      * @return resource
      */
-    protected static function openPathStream(string $filePath)
+    private static function openPathStream(string $filePath)
     {
+        if (! is_file($filePath) || ! is_readable($filePath)) {
+            throw new RuntimeException(sprintf('Could not open file for reading: %s', $filePath));
+        }
+
         $stream = fopen($filePath, 'rb');
 
         if ($stream === false) {
@@ -92,7 +96,7 @@ final class StreamHelper
     /**
      * @return resource
      */
-    protected static function openDiskStream(Filesystem $disk, string $filePath)
+    private static function openDiskStream(Filesystem $disk, string $filePath)
     {
         $stream = $disk->readStream($filePath);
 
