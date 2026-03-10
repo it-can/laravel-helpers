@@ -3,8 +3,8 @@
 namespace ITCAN\LaravelHelpers\Helpers;
 
 use Exception;
-use Illuminate\Support\Str;
 use RuntimeException;
+use Illuminate\Support\Str;
 
 class FileEncrypter
 {
