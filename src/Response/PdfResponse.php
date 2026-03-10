@@ -6,15 +6,15 @@ use Illuminate\Http\Response;
 
 class PdfResponse extends Response
 {
-    public function __construct($content, $filename, $extraHeaders = [])
+    public function __construct($content, string $filename, array $extraHeaders = [])
     {
         $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            'Content-Disposition' => sprintf('inline; filename="%s"', $filename),
         ];
 
         if (is_array($extraHeaders)) {
-            $headers = $headers + $extraHeaders;
+            $headers += $extraHeaders;
         }
 
         parent::__construct($content, 200, $headers);
