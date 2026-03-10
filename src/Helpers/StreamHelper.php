@@ -28,7 +28,9 @@ final class StreamHelper
         $stream = $disk->readStream($filePath);
 
         if ($stream === false) {
-            throw new RuntimeException(sprintf('Could not open disk file for reading: %s', $filePath));
+            $diskName = self::resolveDiskName($disk);
+
+            throw new RuntimeException(sprintf('Could not open disk (%s) file for reading: %s', $diskName, $filePath));
         }
 
         self::streamToOutput($stream);
@@ -63,5 +65,24 @@ final class StreamHelper
     public static function sanitizeDownloadName(string $fileName): string
     {
         return str_replace(['"', "\r", "\n"], '', $fileName);
+    }
+
+    public static function resolveDiskName(string|Filesystem $disk): string
+    {
+        if (is_string($disk)) {
+            return $disk;
+        }
+
+        if (! method_exists($disk, 'getConfig')) {
+            return 'unknown';
+        }
+
+        $config = $disk->getConfig();
+
+        if (! is_array($config)) {
+            return 'unknown';
+        }
+
+        return $config['disk_name'] ?? 'unknown';
     }
 }
