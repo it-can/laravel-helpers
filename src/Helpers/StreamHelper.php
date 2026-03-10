@@ -100,7 +100,7 @@ final class StreamHelper
     {
         $stream = $disk->readStream($filePath);
 
-        if ($stream === false) {
+        if (! is_resource($stream)) {
             $diskName = self::resolveDiskName($disk);
 
             throw new RuntimeException(sprintf(
