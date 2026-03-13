@@ -3,6 +3,7 @@
 namespace ITCAN\LaravelHelpers\Helpers;
 
 use RuntimeException;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\Filesystem;
 
@@ -50,10 +51,22 @@ final class StreamHelper
     public static function sanitizeDownloadName(string $fileName): string
     {
         $fileName = trim($fileName);
-        $fileName = preg_replace('/[[:cntrl:]]+/', '', $fileName);
-        $fileName = str_replace(['"', '/', '\\'], '-', $fileName);
 
-        return $fileName !== '' ? $fileName : 'download';
+        if ($fileName === '') {
+            return 'download';
+        }
+
+        $fileName = preg_replace('/[[:cntrl:]]+/', '', $fileName);
+        $fileName = str_replace(['"', '/', '\\', '%'], '-', $fileName);
+        $fileName = Str::ascii($fileName);
+        $fileName = preg_replace('/[^\x20-\x7E]+/', '', $fileName);
+        $fileName = trim($fileName);
+
+        if ($fileName === '') {
+            return 'download';
+        }
+
+        return $fileName;
     }
 
     public static function resolveDiskName(string|Filesystem $disk): string
